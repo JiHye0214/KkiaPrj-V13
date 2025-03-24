@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <th:block th:fragment="comment">
+        <head>
+            <link rel="stylesheet" th:href="@{/css/common/comment.css}" />
+            <script defer th:src="@{/js/common/comment.js}"></script>
+        </head>
+
+        <div id="comment-wrap">
+            <div id="comment-content-wrap" class="display-flex">
+                <th:block th:each="comment, iterState : ${listItem.comments}">
+                    <form class="comment-delete-form comment-content display-flex" th:name="'comment-delete-form' + ${iterState.index}" th:action="@{'/community/' +${page} + '/cmtDelete'}" method="post">
+                        <input type="hidden" name="id" th:value="${comment.id}" />
+
+                        <img class="writer-pic" th:src="@{'/upload/' + ${comment.user.userImg.fileName}}" />
+                        <div class="writer-nickname" th:text="${comment.user.nickname}"></div>
+                        <div class="write-content" th:text="${comment.content}"></div>
+                        <div class="write-time" th:text="${#temporals.format(comment.createdDate, 'yyyy.MM.dd')}"></div>
+                        <input type="button" class="comment-delete-btn" value="삭제" th:if="${logged_user.id == comment.user.id} or ${logged_user.authority == 'ADMIN'}" />
+                    </form>
+                </th:block>
+            </div>
+
+            <form id="comment-write-wrap" class="comment-write display-flex" autocomplete="off" name="cmt-write-form" th:action="@{'/community/' +${page} + '/cmtWrite'}" method="post">
+                <input type="hidden" name="listItemId" th:value="${listItem.id}" />
+
+                <img class="writer-pic" th:src="@{'/upload/' + ${logged_user.userImg.fileName}}" />
+                <div class="writer-nickname" th:text="${logged_user.nickname}"></div>
+                <input id="comment-input" type="text" placeholder="댓글을 입력하세요" name="content" />
+                <button type="button" id="comment-write-btn">작성</button>
+            </form>
+        </div>
+    </th:block>
+</html>

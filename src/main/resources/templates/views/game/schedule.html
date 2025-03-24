@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" th:href="@{/img/favicon.png}" type="image/x-icon" />
+        <link rel="stylesheet" th:href="@{/css/common/common.css}" />
+        <link rel="stylesheet" th:href="@{/css/game/game.css}" />
+        <script defer th:src="@{/js/game/game.js}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <title>공식 일정</title>
+    </head>
+    <body>
+        <!--/* header */-->
+        <th:block th:insert="~{fragment/header::header}"></th:block>
+
+        <!--/* DB 넣기 */-->
+        <div id="game-wrapper">
+            <div class="game-wrap" th:each="schedule : ${schedules}">
+                <span class="game-item" th:text="|${schedule.gameDate}/${schedule.homeGame}/${schedule.opponent}|"></span>
+            </div>
+        </div>
+
+        <div id="calendar-wrapper" class="display-flex">
+            <div class="cal-wrap display-flex-set">
+                <div id="cal-bar" class="display-flex-set">
+                    <div id="bar-img" class="display-flex-set">
+                        <img src="/img/ticket-emblem.png"/>
+                    </div>
+                    <div id="bar-inform" class="display-flex-set">
+                        <div id="bar-date"></div>
+                        <img id="bar-mascot" src="/img/2025_cheer_pc.png"/>
+                    </div>
+                </div>
+                <div id="cal-items">
+                    <div id="cal-title" class="display-flex-set">
+<!--                        <form>-->
+<!--                            <input id="ctgy" type="hidden" value="ctgy-first"/>-->
+<!--                            <div id="cal-ctgy" class="display-flex-set">-->
+<!--                                <p>1군</p>-->
+<!--                                <img src="/img/down.png"/>-->
+<!--                            </div>-->
+<!--                        </form>-->
+                        <div id="cal-nav" class="display-flex-set">
+                            <a href="javascript:;" class="nav-btn go-prev"></a>
+                            <div class="year-month"></div>
+                            <a href="javascript:;" class="nav-btn go-next"></a>
+                        </div>
+                        <div id="cal-banner" class="display-flex">
+                            <div>🔴HOME</div>
+                            <div>⚪AWAY</div>
+                        </div>
+                    </div>
+
+                    <div id="cal-main">
+                        <div id="cal-days" class="display-flex-set">
+                            <div class="day">SUN</div>
+                            <div class="day">MON</div>
+                            <div class="day">TUE</div>
+                            <div class="day">WED</div>
+                            <div class="day">THU</div>
+                            <div class="day">FRI</div>
+                            <div class="day">SAT</div>
+                        </div>
+                        <div id="cal-dates" class="display-flex-set"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

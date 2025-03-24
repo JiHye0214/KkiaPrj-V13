@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" th:href="@{/img/favicon.png}" type="image/x-icon" />
+        <link rel="stylesheet" th:href="@{/css/common/common.css}" />
+        <link rel="stylesheet" th:href="@{/css/home.css}" />
+        <script defer th:src="@{/js/home.js}"></script>
+        <script type="text/javascript" th:src="@{'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${mapKey}}"></script> <!--/* 이게 되네 */-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <script src="https://kit.fontawesome.com/3295e8b88e.js" crossorigin="anonymous"></script>
+        <title>KKIA TIGERS</title>
+    </head>
+    <body>
+        <!--/* header */-->
+        <th:block th:insert="~{fragment/header::header}"></th:block>
+
+        <div id="main-wrapper">
+            <div id="main-today" class="display-flex-set">
+                <th:block th:if="${baseball == 12}">
+                    <div id="not-today" class="display-flex-set">오늘은 경기가 없습니다</div>
+                </th:block>
+                <div id="main-today-title" class="display-flex">
+                    <div>TODAY</div>
+                    <div id="today-date" th:text="${today}"></div>
+                </div>
+                <th:block th:unless="${baseball == 12}">
+                    <!--/* 엔트리 */-->
+                    <div class="player-wrap" th:each="player : ${players}">
+                        <span class="player-item" th:text="|${player.name}/${player.number}|"></span>
+                    </div>
+                    <!--/* 지도 */-->
+                    <div class="map-wrap">
+                        <div id="latitude" th:text="${home.latitude}"></div>
+                        <div id="longitude" th:text="${home.longitude}"></div>
+                    </div>
+
+                    <ul id="main-today-opponent" class="display-flex-set">
+                        <li id="away">
+                            <img th:src="@{'/img/' + ${away.img}}"/>
+                            <span th:text="${away.name}"></span>
+                        </li>
+                        <img src="/img/baseball.png" />
+                        <li id="home">
+                            <span th:text="${home.name}"></span>
+                            <img th:src="@{'/img/' + ${home.img}}"/>
+                        </li>
+                    </ul>
+
+                    <ul id="main-today-entry" class="display-flex">
+                        <li class="display-flex-set" th:each="entry, state : ${entry}">
+                            <div class="entry-index" th:text="${state.count}"></div>
+                            <div class="entry-player" th:text="${entry.name}"></div>
+                        </li>
+                    </ul>
+
+                    <div id="main-today-place" class="display-flex">
+
+                        <div class="place-content display-flex-set" id="place-map"></div>
+
+                        <div class="place-content display-flex-set" id="place-weather">
+                            <div id="weather-title">
+                                <img src="/img/home-location.png"/>
+                                <span id="location" th:text="${home.place}"></span>
+                            </div>
+                            <div id="weather-icon" th:text="${weather.weather[0].icon}"></div>
+                            <div >
+                                <span id="temperature" th:text="${weather.main.temp} + '°C'"></span>
+                            </div>
+                            <div id="weather-second" class="display-flex">
+                                <div>
+                                    <img src="/img/home-humidity.png"/>
+                                    <span id="humidity" th:text="${weather.main.humidity} + '%'"></span>
+                                </div>
+                                <div>
+                                    <img src="/img/home-wind.png"/>
+                                    <span id="wind" th:text="${weather.wind.speed} + 'm/s'"></span>
+                                </div>
+                                <div>
+                                    <img src="/img/home-cloud.png"/>
+                                    <span id="cloud" th:text="${weather.clouds.all + '%'}"></span>
+                                </div>
+                                <div>
+                                    <img src="/img/home-pressure.png"/>
+                                    <span id="pressure" th:text="${weather.main.pressure + 'hPa'}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+
+            <div id="main-fan" class="display-flex-set">
+                <div id="main-fan-content">
+                    <ul id="slide-wrap" class="display-flex">
+                        <li th:each="favorite : ${top5Favorites}">
+                            <a th:href="@{'/community/favorite/detail/' + ${favorite.id}}">
+                                <img th:src="@{'/upload/' + ${favorite.favoriteImgs[0].fileName}}" />
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <ul id="slide-btn-wrap" class="display-flex">
+                    <li class="active"></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+            
+            <div id="main-news" class="display-flex-set">
+                <div id="main-news-title">NEWS 📰</div>
+                <div id="main-news-content" class="display-flex-set">
+                    <a class="news-item" th:each="news : ${news.items}" target="_blank" th:href="${news.originallink}" th:text="${news.title}"></a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

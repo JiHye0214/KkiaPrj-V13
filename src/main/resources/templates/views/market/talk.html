@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/common/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/market/marketTalk.css}" />
+    <script defer th:src="@{/js/market/marketTalk.js}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <title>market-talk</title>
+</head>
+<body>
+    <div id="talk-wrapper" class="display-flex" th:with="logged_user=${#authentication.principal.user}">
+        <div class="display-flex" id="market-writer-inform">
+            <a th:href="@{/market/talk-list}"><img id="prev-img" src="/img/slidePrevArrow.png"/></a>
+            <img id="writer-pic" th:src="@{'/upload/' + ${recipient.userImg.fileName}}"/>
+            <div id="writer-nickname" th:text="${recipient.nickname}"></div>
+        </div>
+        <div class="display-flex" id="market-chat-space">
+            <div th:each="talk : ${talkList}" th:classappend="${logged_user.id == talk.user.id} ? 'talk-me' : ''" class="talk-content" th:text="${talk.content}"></div>
+        </div>
+        <form method="post" th:action="@{/market/writeTalk}" class="display-flex" id="market-chat-form">
+            <input id="marketTalkListId" type="hidden" name="marketTalkListId" th:value="${marketTalkListId}" />
+            <input id="recipientId" type="hidden" name="recipientId" th:value="${recipient.id}"/>
+            <input id="submit-content" type="text" name="content"/>
+            <input id="submit-btn" type="submit" value="전송"/>
+        </form>
+    </div>
+</body>
+</html>

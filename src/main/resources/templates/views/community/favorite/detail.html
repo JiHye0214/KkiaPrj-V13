@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <script th:unless="${listItem}" th:inline="javascript">
+        alert("페이지가 존재하지 않습니다.");
+        location.href = "/community/food/list";
+    </script>
+
+    <th:block th:if="${listItem}" th:with="logged_user=${#authentication.principal.user}">
+        <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <link rel="shortcut icon" th:href="@{/img/favicon.png}" type="image/x-icon" />
+            <link rel="stylesheet" th:href="@{/css/common/common.css}" />
+            <link rel="stylesheet" th:href="@{/css/community/favoriteDetail.css}" />
+            <script defer th:src="@{/js/common/imgSwiper.js}"></script>
+            <script defer th:src="@{/js/community/favoriteDetail.js}"></script>
+            <title>최애 자랑 게시판 상세</title>
+        </head>
+        <body>
+            <!--/* header */-->
+            <th:block th:insert="~{fragment/header::header}"></th:block>
+
+            <main>
+                <div id="detail-wrap">
+                    <div id="detail-header-wrap" class="display-flex-set padding-line">
+                        <div id="writer-wrap" class="display-flex">
+                            <img class="writer-pic" th:src="@{'/upload/' + ${listItem.user.userImg.fileName}}" />
+                            <div class="writer-nickname" th:text="${listItem.user.nickname}"></div>
+                        </div>
+
+                        <div id="num-wrap" class="display-flex">
+                            <div class="display-flex-set">
+                                <div>좋아요수</div>
+                                <div th:text="${listItem.likeCnt}"></div>
+                            </div>
+                            <div class="display-flex-set">
+                                <div>조회수</div>
+                                <div th:text="${listItem.viewCnt}"></div>
+                            </div>
+                            <div class="display-flex-set">
+                                <div>작성일</div>
+                                <div th:text="${#temporals.format(listItem.createdDate, 'yyyy.MM.dd')}"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="title-wrap" class="display-flex-set">
+                        <div class="display-flex">
+                            <form id="like-form" name="like-form" th:action="@{/community/favorite/detailLikeToggle}" method="post">
+                                <input type="hidden" th:value="${listItem.id}" name="favoriteId" />
+                                <input type="hidden" th:value="${isLikeClicked}" id="isLikeClicked" />
+
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="icon"
+                                    viewBox="0 0 1024 1024"
+                                    id="heart"
+                                >
+                                    <path
+                                        d="M742.4 101.12A249.6 249.6 0 0 0 512 256a249.6 249.6 0 0 0-230.72-154.88C143.68 101.12 32 238.4 32 376.32c0 301.44 416 546.56 480 546.56s480-245.12 480-546.56c0-137.92-111.68-275.2-249.6-275.2z"
+                                    ></path>
+                                </svg>
+                            </form>
+                            <div id="title" th:text="${listItem.title}"></div>
+                        </div>
+                        <div id="player-info-wrap" class="display-flex">
+                            <div id="num-name-wrap" class="display-flex">
+                                <div id="num" th:text="${listItem.playerNum}"></div>
+                                <div id="name" th:text="${listItem.playerName}"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper padding-line display-flex">
+                        <div class="swiper-slide" th:each="img : ${listItem.favoriteImgs}">
+                            <img th:src="@{'/upload/' + ${img.fileName}}" />
+                        </div>
+                    </div>
+                </div>
+
+                <div id="btn-wrap" class="display-flex">
+                    <a th:href="@{/community/favorite/write}">작성</a>
+                    <a th:href="@{'/community/favorite/update/' + ${listItem.id}}" th:if="${logged_user.id == listItem.user.id}">수정</a>
+                    <form name="delete-form" th:action="@{/community/favorite/delete}" method="post" th:if="${logged_user.id == listItem.user.id} or ${logged_user.authority == 'ADMIN'}">
+                        <input type="hidden" name="id" th:value="${listItem.id}" />
+                        <input type="hidden" name="action" th:value="삭제" />
+                        <button type="button" id="delete-btn">삭제</button>
+                    </form>
+                    <a th:href="@{/community/favorite/list}">목록</a>
+                </div>
+
+                <!--/* comment */-->
+                <th:block th:insert="~{fragment/comment::comment}"></th:block>
+            </main>
+        </body>
+    </th:block>
+</html>

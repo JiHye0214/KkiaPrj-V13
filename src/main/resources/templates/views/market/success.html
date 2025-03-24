@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <script th:if="${result > 0}" th:inline="javascript">
+        if ([[${action}]] == "작성" || [[${action}]] == "수정") {
+            location.href = "detail/[[${market?.id}]]";
+        } else if ([[${action}]] == "삭제") {
+            location.href = "list";
+        } else if ([[${action}]] == "채팅 작성") {
+            location.href = "talk/[[${marketTalk?.recipientId}]]";
+        } else {
+            history.back();
+        }
+    </script>
+    <script th:unless="${result > 0}" th:inline="javascript">
+        history.back();
+    </script>
+</html>

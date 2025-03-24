@@ -1,0 +1,87 @@
+#talk-wrapper {
+    flex-direction: column;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+#market-writer-inform {
+    width: 100%;
+    position: fixed;
+    column-gap: 10px;
+    padding: 15px;
+    background: var(--yellow-btn);
+    align-items: center;
+    border-bottom: 2px solid;
+}
+#prev-img {
+    width: 16px;
+    cursor: pointer;
+    vertical-align: -2px;
+}
+#writer-pic {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#market-chat-space {
+    width: 100%;
+    height: calc(100vh - 155px);
+    position: fixed;
+    top: 78px;
+    font-size: 14px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0 15px;
+    row-gap: 10px;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+.talk-content {
+    background-color: white;
+    border: 2px solid ;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+
+    max-width: 378px;
+    min-width: 22px;
+    word-wrap: break-word;
+}
+.talk-content.talk-me {
+    background-color: var(--yellow-btn);
+    margin-left: auto;
+}
+
+#market-chat-form {
+    border-top: 2px solid;
+    height: 60px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+#market-chat-form > input {
+    &:nth-child(3) {
+        width: 90%;
+        border: none;
+        border-right: 2px solid;
+        padding: 10px 15px;
+        &:focus {
+            outline: none;
+        }
+    }
+    &:last-child {
+        width: 13%;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        &:hover {
+            background: gainsboro;
+        }
+    }
+}

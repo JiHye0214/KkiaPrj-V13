@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <script th:unless="${favorite}" th:inline="javascript">
+        alert("페이지가 존재하지 않습니다.");
+        location.href = "/community/favorite/list";
+    </script>
+
+    <th:block th:if="${favorite}" th:with="logged_user=${#authentication.principal.user}">
+        <script th:unless="${logged_user.id == favorite.user.id}" th:inline="javascript">
+            alert("작성자가 아닙니다.");
+            history.back();
+        </script>
+
+        <th:block th:if="${logged_user.id == favorite.user.id}">
+            <head>
+                <meta charset="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <link rel="shortcut icon" th:href="@{/img/favicon.png}" type="image/x-icon" />
+                <link rel="stylesheet" th:href="@{/css/common/common.css}" />
+                <link rel="stylesheet" th:href="@{/css/community/favoriteWrite.css}" />
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+                <script defer th:src="@{/js/common/attachment.js}"></script>
+                <script defer th:src="@{/js/common/attachmentDel.js}"></script>
+                <script defer th:src="@{/js/community/favoriteWrite.js}"></script>
+                <title>최애 자랑 게시판 수정</title>
+            </head>
+            <body>
+                <!--/* header */-->
+                <th:block th:insert="~{fragment/header::header}"></th:block>
+
+                <div id="favorite-wrap">
+                    <div id="writer-wrap" class="display-flex">
+                        <img th:src="@{'/upload/' + ${logged_user.userImg.fileName}}" />
+                        <div id="nickname" th:text="${logged_user.nickname}"></div>
+                    </div>
+
+                    <form method="post" name="write-form" th:action="@{/community/favorite/update}" autocomplete="off" enctype="multipart/form-data">
+                        <div id="write-info-wrap">
+                            <div class="err-wrap display-flex">
+                                <div>
+                                    <p class="err-msg">* 제목을 입력해 주세요</p>
+                                </div>
+                                <div>
+                                    <p class="err-msg">* 선수 이름을 입력해 주세요</p>
+                                </div>
+                                <div>
+                                    <p class="err-msg">* 번호를 입력해 주세요</p>
+                                </div>
+                            </div>
+
+                            <div id="write-info" class="display-flex">
+                                <input type="text" id="title" class="valid" placeholder="제목" name="title" th:value="${favorite.title}"/>
+                                <input type="text" id="playerName" class="valid" placeholder="선수 이름" name="playerName" th:value="${favorite.playerName}"/>
+                                <input type="text" id="num" class="valid" placeholder="번호" name="playerNum" th:value="${favorite.playerNum}"/>
+                                <input type="hidden" name="id" th:value="${favorite.id}" />
+                            </div>
+                        </div>
+
+                        <div class="fileBox">
+                            <div>선수 이미지</div>
+                            <p class="file-err-msg">* 사진을 하나 이상 업로드 해 주세요</p>
+                            <div id="delFiles" style="display: none;"></div>
+                            <div class="picture-btn">파일 추가</div>
+                            <div class="confirm-box-wrap display-flex">
+                                <!--/* 기존 파일 */-->
+                                <div th:each="favoriteImg : ${favorite.favoriteImgs}" class="confirm-box-item update display-flex" style="margin-top: 10px">
+                                    <div class="update-confirm-txt" th:text="${favoriteImg.fileName}"></div>
+                                    <input class="file-delete-btn" th:fileNumber="${favoriteImg.id}" type="button" value="삭제" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="btn-wrap" class="display-flex">
+                            <button type="button" id="submit-btn">수정완료</button>
+                            <a th:href="@{/community/favorite/list}">목록</a>
+                        </div>
+                    </form>
+                </div>
+            </body>
+        </th:block>
+    </th:block>
+</html>
