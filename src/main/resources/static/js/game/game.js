@@ -2,14 +2,23 @@
 const gameArr = [];
 const teamArr = {
     NCHT: "/img/team-dinos.png",
+    NCHT_lo: "창원NC파크",
     HTSK: "/img/team-landers.png",
+    HTSK_lo: "인천SSG랜더스필드",
     OBHT: "/img/team-bears.png",
+    OBHT_lo: "잠실야구장",
     HHHT: "/img/team-eagles.png",
-    HTWO: "/img/team-heros.png",
+    HHHT_lo: "대전 한화생명 볼파크",
+    WOHT: "/img/team-heros.png",
+    WOHT_lo: "고척스카이돔",
     SSHT: "/img/team-lions.png",
+    SSHT_lo: "대구삼성라이온즈파크",
     HTLT: "/img/team-giants.png",
+    HTLT_lo: "사직야구장",
     HTLG: "/img/team-twins.png",
-    KTHT: "/img/team-wiz.png"
+    HTLG_lo: "잠실야구장",
+    KTHT: "/img/team-wiz.png",
+    KTHT_lo: "수원KT위즈파크"
 };
 
 const $game = document.querySelectorAll(".game-wrap .game-item");
@@ -17,8 +26,10 @@ $game.forEach((game) => {
     let arr = game.innerText.split("/");
     gameArr.push({
         gameDate : arr[0],
-        homeGame : arr[1],
-        opponent : arr[2],
+        gameTime : arr[1],
+        homeGame : arr[2],
+        opponent : arr[3],
+        gameState : arr[4]
     })
 })
 
@@ -153,9 +164,6 @@ const calendarInit = () => {
     });
 
     const renderInform = () => {
-        // 초기화
-        $("#bar-inform").html("");
-
         const clickMonth = $(".year-month").text();
         const clickDate = $("#cal-dates").find("div.dayClick span").text().trim();
         let setFullDate = clickMonth + "." + clickDate;
@@ -164,33 +172,69 @@ const calendarInit = () => {
         drawDate.yearMonth = clickMonth;
         drawDate.date = clickDate;
 
+        // 게임 상세 정보...
         let matchFound = false; // 경기 여부 체크
-        // 게임 상세 정보 필요해...
         gameArr.forEach((game) => {
             if (game.gameDate === setFullDate) {
                 matchFound = true;
-                $("#bar-inform").append(`
-                    <div id="bar-date">${setFullDate}</div>
+
+                const newContent = `
+                    <div id="bar-state" class="display-flex-set">
+                        <p class='inform-items ${game.gameState == "soon" ? "soon" : ""}'>${game.gameState == "soon" ? "경기 예정" : "경기 종료"}</p>
+                        <p id="game-result" class='inform-items'>${game.gameState == "win" ? "승" : game.gameState == "lose" ? "패" : game.gameState == "draw" ? "무" : ""}</p>
+                    </div>
+                    <div id="bar-date">${game.gameDate + " " + game.gameTime}</div>
+                    <div id="bar-location">
+                        ${game.homeGame == "true" ? "광주-기아챔피언스필드" : teamArr[game.opponent + "_lo"]}
+                    </div>
                     <div id="bar-opponent" class="display-flex-set">
                         <img id="home-logo" src="/img/v13.png"/>
                         vs
                         <img id="opponent-logo" src="${teamArr[game.opponent]}" />
                     </div>
-                    <div id="bar-location">
-
-                    </div>
-                    <div id="bar-detail-btn">
-                        자세히 보기
+                    <div id="bar-detail-btn" class="inform-items btn-hover">
+                        자세히 보기  ➡️
                     </div>
                     <img id="bar-bottom-img" src="/img/2025_cheer_pc.png"/>
-                `)
+                `;
 
-                // 공식으로 이동
-                $("#bar-detail-btn").off("click").on("click", () => {
+                if ($("#bar-inform").is(":hidden")) {
+                    $("#bar-inform-fade").html(newContent);
+                    applyGameResultStyle(game.gameState);
+                    $("#bar-inform").fadeIn(300);
+                } else {
+                    // 기존 내용이 있을 때는 애니메이션 적용
+                    $("#bar-inform-fade").fadeOut(300, function () {
+                        $(this).html(newContent);
+                        applyGameResultStyle(game.gameState);
+                        $(this).fadeIn(300);
+                    });
+                }
+
+                // 게임 결과 스타일 적용 함수
+                function applyGameResultStyle(gameState) {
+                    let $gameResult = $("#game-result");
+                    switch (gameState) {
+                        case "win":
+                            $gameResult.css({ "background-color": "var(--kia-red)", "display": "block" });
+                            break;
+                        case "lose":
+                            $gameResult.css({ "background-color": "", "display": "block" });
+                            break;
+                        case "cancel":
+                            $gameResult.css({ "background-color": "lightgray", "display": "block" });
+                            break;
+                        default:
+                            $gameResult.css("display", "none");
+                    }
+                }
+
+                $("#bar-inform").off("click").on("click", "#bar-detail-btn", function () {
                     let setMonth = clickMonth;
                     let setDate = clickDate;
                     let dateComplete = "";
                     let setTeamCode = "";
+                    let url = "";
 
                     // year month 가공 (1자리 월을 2자리로 변환)
                     let arr = setMonth.split(".");
@@ -206,16 +250,20 @@ const calendarInit = () => {
 
                     dateComplete = setMonth + setDate;
                     setTeamCode = game.opponent;
-                    let url = `https://tigers.co.kr/game/schedule/view?type=major&gameKey=${dateComplete}${setTeamCode}0&gameDate=${dateComplete}`;
+
+                    if(game.gameState == "soon") {
+                        url = `https://tigers.co.kr/game/schedule/major/${setMonth}`;
+                    } else {
+                        url = `https://tigers.co.kr/game/schedule/view?type=major&gameKey=${dateComplete}${setTeamCode}0&gameDate=${dateComplete}`;
+                    }
+
                     window.open(url, "_blank"); // 새 창 열기
-                })
+                });
             }
         });
 
         if(!matchFound) {
-            $("#bar-inform").append(`
-                경기가 없습니다!
-            `);
+            $("#bar-inform").fadeOut(300);
         }
     };
 

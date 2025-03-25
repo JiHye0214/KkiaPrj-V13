@@ -20,7 +20,7 @@
         <!--/* DB 넣기 */-->
         <div id="game-wrapper">
             <div class="game-wrap" th:each="schedule : ${schedules}">
-                <span class="game-item" th:text="|${schedule.gameDate}/${schedule.homeGame}/${schedule.opponent}|"></span>
+                <span class="game-item" th:text="|${schedule.gameDate}/${schedule.gameTime}/${schedule.homeGame}/${schedule.opponent}/${schedule.gameState}"></span>
             </div>
         </div>
 
@@ -30,7 +30,9 @@
                     <div id="bar-img" class="display-flex-set">
                         <img src="/img/ticket-emblem.png"/>
                     </div>
-                    <div id="bar-inform" class="display-flex-set"></div>
+                    <div id="bar-inform">
+                        <div id="bar-inform-fade" class="display-flex"></div>
+                    </div>
                 </div>
                 <div id="cal-items">
                     <div id="cal-title" class="display-flex-set">

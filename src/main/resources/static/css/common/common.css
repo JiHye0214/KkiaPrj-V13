@@ -43,3 +43,6 @@ li {
     margin: 0 auto;
 }
 
+.btn-hover:hover {
+    cursor: pointer;
+}
