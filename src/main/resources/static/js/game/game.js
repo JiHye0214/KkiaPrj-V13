@@ -42,37 +42,6 @@ const gameSetting = () => {
                 }
             }
         })
-
-        // 공식으로 이동
-        date.onclick= () => {
-
-            let setMonth = $month.innerText;
-            let setDate = date.innerText;
-            let dateComplete = "";
-            let setTeamCode = "";
-
-            // year month 가공
-            let arr = setMonth.split(".");
-            if(arr[1].length == 1) {
-                arr[1] = `0${arr[1]}`;
-                setMonth = arr.join("");
-            }
-            // date 가공
-            if(date.innerText.length == 1){
-                setDate = `0${date.innerText}`;
-            }
-
-            dateComplete = setMonth + setDate;
-
-            gameArr.forEach((game) => {
-                if(game.gameDate == that) { // 기록 있으면
-                    setTeamCode = game.opponent;
-                    url = `https://tigers.co.kr/game/schedule/view?type=major&gameKey=${dateComplete}${setTeamCode}0&gameDate=${dateComplete}`
-                    window.open(`${url}`, "_blank"); // 새창 열기
-                }
-            })
-
-        }
     })
 };
 
@@ -97,7 +66,11 @@ const calendarInit = () => {
     var today = new Date(utc + kstGap); // 한국 시간으로 date 객체 만들기(오늘)
 
     var thisMonth = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    const realToday = thisMonth;
+    const realToday = thisMonth; // 오늘 날짜 표시
+    let drawDate = { // 클릭한 날짜 css
+        yearMonth: realToday.getFullYear() + "." + (realToday.getMonth() + 1),
+        date: realToday.getDate()
+    }
 
     // 달력에서 표기하는 날짜 객체
     var currentYear = thisMonth.getFullYear(); // 달력에서 표기하는 연
@@ -149,10 +122,18 @@ const calendarInit = () => {
 
             $("#cal-dates .tag.day span").each((dayIndex, day) => { // $.each 말고 .each 써도 됨
                 if (realToday.getDate() == parseInt($(day).text(), 10)) {
-                    $($theseDays[dayIndex]).addClass("dayClick");
-
                     const todayNumber = $($theseDays[dayIndex]).find("span");
                     $(todayNumber).addClass("today");
+                }
+            });
+        }
+        // 클릭 day css
+        if ($(".year-month").text() == drawDate.yearMonth) {
+            const $theseDays = document.querySelectorAll("#cal-dates .tag.day");
+
+            $("#cal-dates .tag.day span").each((dayIndex, day) => { // $.each 말고 .each 써도 됨
+                if (parseInt($(day).text(), 10) == drawDate.date) {
+                    $($theseDays[dayIndex]).addClass("dayClick");
                 }
             });
         }
@@ -160,7 +141,7 @@ const calendarInit = () => {
         gameSetting();
     }
 
-    // 클릭시 그것만 테두리
+    // 클릭 시 그것만 색깔 변경
     $("#cal-dates").on("click", ".tag.day", function(event) {
         event.stopPropagation();
 
@@ -171,11 +152,72 @@ const calendarInit = () => {
         renderInform();
     });
 
-    function renderInform() {
+    const renderInform = () => {
+        // 초기화
+        $("#bar-inform").html("");
+
         const clickMonth = $(".year-month").text();
-        const clickDay = $("#cal-dates").find("div.dayClick span").text(); // dayClick 클래스를 가진 div 태그 가져오기
-        $("#bar-date").text(clickMonth + " - " + clickDay);
-    }
+        const clickDate = $("#cal-dates").find("div.dayClick span").text().trim();
+        let setFullDate = clickMonth + "." + clickDate;
+
+        // 현재 클릭한 날짜 셋팅
+        drawDate.yearMonth = clickMonth;
+        drawDate.date = clickDate;
+
+        let matchFound = false; // 경기 여부 체크
+        // 게임 상세 정보 필요해...
+        gameArr.forEach((game) => {
+            if (game.gameDate === setFullDate) {
+                matchFound = true;
+                $("#bar-inform").append(`
+                    <div id="bar-date">${setFullDate}</div>
+                    <div id="bar-opponent" class="display-flex-set">
+                        <img id="home-logo" src="/img/v13.png"/>
+                        vs
+                        <img id="opponent-logo" src="${teamArr[game.opponent]}" />
+                    </div>
+                    <div id="bar-location">
+
+                    </div>
+                    <div id="bar-detail-btn">
+                        자세히 보기
+                    </div>
+                    <img id="bar-bottom-img" src="/img/2025_cheer_pc.png"/>
+                `)
+
+                // 공식으로 이동
+                $("#bar-detail-btn").off("click").on("click", () => {
+                    let setMonth = clickMonth;
+                    let setDate = clickDate;
+                    let dateComplete = "";
+                    let setTeamCode = "";
+
+                    // year month 가공 (1자리 월을 2자리로 변환)
+                    let arr = setMonth.split(".");
+                    if (arr[1].length === 1) {
+                        arr[1] = `0${arr[1]}`;
+                        setMonth = arr.join("");
+                    }
+
+                    // date 가공 (1자리 날짜를 2자리로 변환)
+                    if (setDate.length === 1) {
+                        setDate = `0${setDate}`;
+                    }
+
+                    dateComplete = setMonth + setDate;
+                    setTeamCode = game.opponent;
+                    let url = `https://tigers.co.kr/game/schedule/view?type=major&gameKey=${dateComplete}${setTeamCode}0&gameDate=${dateComplete}`;
+                    window.open(url, "_blank"); // 새 창 열기
+                })
+            }
+        });
+
+        if(!matchFound) {
+            $("#bar-inform").append(`
+                경기가 없습니다!
+            `);
+        }
+    };
 
     renderInform();
 

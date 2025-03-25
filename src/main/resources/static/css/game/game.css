@@ -34,8 +34,32 @@
     background-color: white;
     border-radius: 10px;
     position: relative;
+    flex-direction: column;
 }
-#cal-bar #bar-inform #bar-mascot {
+
+#cal-bar #bar-inform #bar-opponent {
+    gap: 10px;
+}
+#cal-bar #bar-inform #home-logo {
+    width: 70px;
+}
+#cal-bar #bar-inform #opponent-logo {
+    width: 50px;
+}
+
+#cal-bar #bar-inform #bar-detail-btn {
+    background: var(--tiger-indigo);
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+#cal-bar #bar-inform #bar-bottom-img {
     width: 120px;
     position: absolute;
     bottom: 30px;
