@@ -1,5 +1,6 @@
 #game-wrapper,
-.game-wrap {
+.game-wrap,
+.team-wrap {
     display: none;
 }
 

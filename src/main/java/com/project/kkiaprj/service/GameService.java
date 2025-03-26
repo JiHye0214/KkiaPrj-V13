@@ -7,8 +7,9 @@ import java.util.List;
 
 public interface GameService {
 
-    List<GameSchedule> getSchedule();
+    void gameRender(Model model);
 
     // 홈 정보 다 가져오기
     void homeRender(Model model);
+
 }

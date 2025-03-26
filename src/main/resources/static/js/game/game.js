@@ -1,26 +1,19 @@
 // 일정 넣기
+const teamArr = [];
 const gameArr = [];
-const teamArr = {
-    NCHT: "/img/team-dinos.png",
-    NCHT_lo: "창원NC파크",
-    HTSK: "/img/team-landers.png",
-    HTSK_lo: "인천SSG랜더스필드",
-    OBHT: "/img/team-bears.png",
-    OBHT_lo: "잠실야구장",
-    HHHT: "/img/team-eagles.png",
-    HHHT_lo: "대전 한화생명 볼파크",
-    WOHT: "/img/team-heros.png",
-    WOHT_lo: "고척스카이돔",
-    SSHT: "/img/team-lions.png",
-    SSHT_lo: "대구삼성라이온즈파크",
-    HTLT: "/img/team-giants.png",
-    HTLT_lo: "사직야구장",
-    HTLG: "/img/team-twins.png",
-    HTLG_lo: "잠실야구장",
-    KTHT: "/img/team-wiz.png",
-    KTHT_lo: "수원KT위즈파크"
-};
 
+// 팀 DB
+const $team = document.querySelectorAll(".team-wrap .team-item");
+$team.forEach((team) => {
+    let arr = team.innerText.split("/");
+    teamArr.push({
+        code : arr[0],
+        img : arr[1],
+        place : arr[2]
+    })
+})
+
+// 스케줄 DB
 const $game = document.querySelectorAll(".game-wrap .game-item");
 $game.forEach((game) => {
     let arr = game.innerText.split("/");
@@ -44,7 +37,8 @@ const gameSetting = () => {
         let that = `${$month.innerText}.${date.innerText}`;
         gameArr.forEach((game) => {
             if(game.gameDate == that) { // 기록 있으면
-                $($aTag[index]).append(`<div class="opponent-ci display-flex-set"><img src="${teamArr[game.opponent]}"/><div/>`);
+                const imgValue = teamArr.find(team => team.code === game.opponent)?.img;
+                $($aTag[index]).append(`<div class="opponent-ci display-flex-set"><img src="${'/img/' + imgValue}"/><div/>`);
 
                 if(game.homeGame == "true") {
                     $($aTag[index]).addClass("home");
@@ -177,6 +171,7 @@ const calendarInit = () => {
         gameArr.forEach((game) => {
             if (game.gameDate === setFullDate) {
                 matchFound = true;
+                const teamValue = teamArr.find(team => team.code === game.opponent);
 
                 const newContent = `
                     <div id="bar-state" class="display-flex-set">
@@ -185,12 +180,12 @@ const calendarInit = () => {
                     </div>
                     <div id="bar-date">${game.gameDate + " " + game.gameTime}</div>
                     <div id="bar-location">
-                        ${game.homeGame == "true" ? "광주-기아챔피언스필드" : teamArr[game.opponent + "_lo"]}
+                        ${game.homeGame == "true" ? "광주-기아챔피언스필드" : teamValue.place}
                     </div>
                     <div id="bar-opponent" class="display-flex-set">
                         <img id="home-logo" src="/img/v13.png"/>
                         vs
-                        <img id="opponent-logo" src="${teamArr[game.opponent]}" />
+                        <img id="opponent-logo" src="${'/img/' + teamValue.img}" />
                     </div>
                     <div id="bar-detail-btn" class="inform-items btn-hover">
                         자세히 보기  ➡️

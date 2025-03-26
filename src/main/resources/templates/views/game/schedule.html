@@ -20,7 +20,10 @@
         <!--/* DB 넣기 */-->
         <div id="game-wrapper">
             <div class="game-wrap" th:each="schedule : ${schedules}">
-                <span class="game-item" th:text="|${schedule.gameDate}/${schedule.gameTime}/${schedule.homeGame}/${schedule.opponent}/${schedule.gameState}"></span>
+                <span class="game-item" th:text="|${schedule.gameDate}/${schedule.gameTime}/${schedule.homeGame}/${schedule.opponent}/${schedule.gameState}|"></span>
+            </div>
+            <div class="team-wrap" th:each="team : ${teams}">
+                <span class="team-item" th:text="|${team.code}/${team.img}/${team.place}|"></span>
             </div>
         </div>
 

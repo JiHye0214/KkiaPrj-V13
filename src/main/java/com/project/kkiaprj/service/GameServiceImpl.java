@@ -43,8 +43,12 @@ public class GameServiceImpl implements GameService {
     TeamRepository teamRepository;
 
     @Override
-    public List<GameSchedule> getSchedule() {
-        return gameScheduleRepository.findAll();
+    public void gameRender(Model model) {
+        List<GameSchedule> schedules = gameScheduleRepository.findAll();
+        List<Team> teams = teamRepository.findAll();
+
+        model.addAttribute("schedules", schedules);
+        model.addAttribute("teams", teams);
     }
 
     @Override
@@ -58,13 +62,9 @@ public class GameServiceImpl implements GameService {
         Long [] entryArr = {1L, 5L, 47L, 34L, 30L, 3L, 8L, 59L, 16L, 13L}; // test
 
         // 오늘 날짜
-//         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.M.dd")); // 이게 되네 ?
-        String date = "2025.3.22"; // test
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.M.dd")); // 이게 되네 ?
         // 공식 일정
         List<GameSchedule> schedules = gameScheduleRepository.findAll();
-        System.out.println("+++++++++++++++++++++++++++++++++");
-        System.out.println(schedules);
-        System.out.println("+++++++++++++++++++++++++++++++++");
         // 엔트리
         List<GamePlayer> gamePlayers = gamePlayerRepository.findAll();
         // 뉴스

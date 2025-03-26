@@ -24,9 +24,8 @@ public class GameController {
                          HttpServletRequest request
     ){
         String uri = U.getRequest().getRequestURI();
-        request.getSession().setAttribute("prevPage", uri);
+        request.getSession().setAttribute("prevPage", uri); // 이거 왜 필요하지?
 
-        List<GameSchedule> gameSchedules = gameService.getSchedule();
-        model.addAttribute("schedules", gameSchedules);
+        gameService.gameRender(model);
     };
 }
