@@ -20,24 +20,13 @@
 
         <div id="main-wrapper">
             <div id="main-today" class="display-flex-set">
-                <th:block th:if="${baseball == 12}">
+                <th:block th:unless="${baseball}">
                     <div id="not-today" class="display-flex-set">오늘은 경기가 없습니다</div>
                 </th:block>
-                <div id="main-today-title" class="display-flex">
-                    <div>TODAY</div>
-                    <div id="today-date" th:text="${today}"></div>
-                </div>
-                <th:block th:unless="${baseball == 12}">
-                    <!--/* 엔트리 */-->
-                    <div class="player-wrap" th:each="player : ${players}">
-                        <span class="player-item" th:text="|${player.name}/${player.number}|"></span>
-                    </div>
-                    <!--/* 지도 */-->
-                    <div class="map-wrap">
-                        <div id="latitude" th:text="${home.latitude}"></div>
-                        <div id="longitude" th:text="${home.longitude}"></div>
-                    </div>
 
+                <div id="today-date" th:text="${today}"></div>
+
+                <th:block th:if="${baseball}">
                     <ul id="main-today-opponent" class="display-flex-set">
                         <li id="away">
                             <img th:src="@{'/img/' + ${away.img}}"/>
@@ -54,12 +43,17 @@
                         <li class="display-flex-set" th:each="entry, state : ${entry}">
                             <div class="entry-index" th:text="${state.count}"></div>
                             <div class="entry-player" th:text="${entry.name}"></div>
+                            <div class="entry-player" th:text="${entry.average}"></div>
                         </li>
                     </ul>
 
-                    <div id="main-today-place" class="display-flex">
-
-                        <div class="place-content display-flex-set" id="place-map"></div>
+                    <div id="main-today-inform" class="display-flex">
+                        <div class="place-content display-flex-set" id="place-map">
+                            <div class="map-wrap">
+                                <div id="latitude" th:text="${home.latitude}"></div>
+                                <div id="longitude" th:text="${home.longitude}"></div>
+                            </div>
+                        </div>
 
                         <div class="place-content display-flex-set" id="place-weather">
                             <div id="weather-title">

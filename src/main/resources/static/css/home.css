@@ -16,11 +16,11 @@
 #main-today {
     width: 830px;
     height: 720px;
-    border: 2px solid;
-    border-radius: 5px;
+    box-shadow: 0 0 20px 0 lightgray;
+    border-radius: 10px;
     flex-direction: column;
     position: absolute;
-    padding-top: 58px;
+    gap: 20px;
 }
 
 #not-today {
@@ -35,37 +35,20 @@
     z-index: 100;
 }
 
-#main-today-title {
-    position: absolute;
-    width: 400px;
-    height: 58px;
-    line-height: 58px;
-    text-align: center;
-    font-size: 20px;
+#main-today #today-date {
+    background: var(--kia-red);
+    color: white;
     font-weight: 800;
-    border-radius: 0 0 5px 5px;
-    border: 2px solid;
-    border-width: 0px 2px 2px 2px;
-    top: 0px;
-    left: 215px;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 30px;
+    top: 16px;
     z-index: 200;
 }
-#main-today-title > div {
-    width: calc(100% / 2);
 
-    &:first-child {
-        background: #eb6868;
-        border-right: 2px solid;
-    }
-}
-
-#main-today-opponent,
-#main-today-entry {
+#main-today-opponent {
     width: 787px;
-    height: 150px;
-    border: 2px solid ;
-    border-radius: 5px;
-    margin-bottom: 20px;
+    height: 140px;
     overflow: hidden;
 }
 
@@ -91,43 +74,44 @@
     margin: 0 30px;
 }
 
-#main-today-entry > li {
-    width: 78.3px;
-    border-right: 2px solid ;
-    font-weight: 600;
-    font-size: 17px;
+/* entry / place / weather ---------------------------*/
+
+#main-today-entry {
+    width: fit-content;
+    height: fit-content;
     flex-direction: column;
+}
+#main-today-entry > li {
+    height: 40px;
+    font-weight: 700;
+    font-size: 15px;
 
     &:last-of-type {
         border: none;
     }
 }
 #main-today-entry > li .entry-index {
-    border-bottom: 2px solid;
-    width: 100%;
+    width: 30px;
+    line-height: 40px;
     text-align: center;
-    padding: 5px 0;
 }
 #main-today-entry > li .entry-player {
-    height: 100%;
-    writing-mode: vertical-lr;
+    width: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
-    letter-spacing: 2px;
 }
 
-/* place and weather ---------------------------*/
-
-#main-today-place {
-    column-gap: 20px;
+#main-today-inform {
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 723px;
+    height: 500px;
 }
 
 .place-content {
-    width: 524px;
-    height: 280px;
-    flex-direction: column;
-    border: 2px solid;
+    width: 400px;
+    height: 200px;
     border-radius: 5px;
     font-weight: 600;
     position: relative;
@@ -178,9 +162,8 @@
 #main-fan {
     width: 350px;
     height: 402px;
-    border: 2px solid;
-    border-radius: 5px;
-
+    border-radius: 10px;
+    box-shadow: 0 0 20px 0 lightgray;
     position: absolute;
     right: 0px;
 }
@@ -248,10 +231,9 @@
 #main-news {
     width: 350px;
     height: 298px;
-    border: 2px solid;
-    border-radius: 5px;
-
+    border-radius: 10px;
     flex-direction: column;
+    box-shadow: 0 0 20px 0 lightgray;
     position: absolute;
     top: 422px;
     right: 0px;

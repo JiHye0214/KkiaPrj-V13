@@ -64,32 +64,26 @@ $(document).ready(function () {
 */
 
 const calendarInit = () => {
-    // 날짜 정보 가져오기
-    var date = new Date(); // 현재 날짜(로컬 기준) 가져오기
-    var utc = date.getTime() + date.getTimezoneOffset() * 60 * 1000; // uct 표준시 도출
-    var kstGap = 9 * 60 * 60 * 1000; // 한국 kst 기준시간 더하기
-    var today = new Date(utc + kstGap); // 한국 시간으로 date 객체 만들기(오늘)
+    const date = new Date(); // 현재 날짜(로컬 기준) 가져오기
+    const utc = date.getTime() + date.getTimezoneOffset() * 60 * 1000; // uct 표준시 도출
+    const kstGap = 9 * 60 * 60 * 1000; // 한국 kst 기준시간 더하기
+    const today = new Date(utc + kstGap); // 한국 시간으로 date 객체 만들기(오늘)
 
-    var thisMonth = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const thisMonth = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     const realToday = thisMonth; // 오늘 날짜 표시
-    let drawDate = { // 클릭한 날짜 css
-        yearMonth: realToday.getFullYear() + "." + (realToday.getMonth() + 1),
-        date: realToday.getDate()
-    }
 
-    // 달력에서 표기하는 날짜 객체
-    var currentYear = thisMonth.getFullYear(); // 달력에서 표기하는 연
-    var currentMonth = thisMonth.getMonth(); // 달력에서 표기하는 월
-    var currentDate = thisMonth.getDate(); // 달력에서 표기하는 일
+    // 클릭한 날짜 CSS
+    const drawDate = {
+        yearMonth: `${realToday.getFullYear()}.${realToday.getMonth() + 1}`,
+        date: realToday.getDate()
+    };
 
     renderCalender(thisMonth);
 
     // 캘린더 렌더링
     function renderCalender(thisMonth) {
-        // 렌더링을 위한 데이터 정리
-        currentYear = thisMonth.getFullYear();
-        currentMonth = thisMonth.getMonth();
-        currentDate = thisMonth.getDate();
+        // 렌더링을 위한 데이터 정리 (구조 분해 할당!)
+        const [currentYear, currentMonth, currentDate] = [thisMonth.getFullYear(), thisMonth.getMonth(), thisMonth.getDate()];
 
         // 이전 달의 마지막 날 날짜와 요일 구하기
         var startDay = new Date(currentYear, currentMonth, 0); // 0번째는 지난달 마지막날을 의미한다

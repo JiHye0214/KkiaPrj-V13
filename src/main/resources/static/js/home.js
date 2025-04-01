@@ -31,7 +31,7 @@ $(document).ready(function() {
     // 엔트리 -----------------------------------------------------
     // 마지막은 "선발투수"
     const pitcher = document.querySelectorAll(".entry-index")[9];
-    pitcher.innerHTML = "선발투수";
+    $(pitcher).html(`<img src="/img/ball.png" width="20px;"/>`)
 
 })
 
