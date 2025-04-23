@@ -29,14 +29,8 @@ public class GamePlayer {
     private String name;
 
     @Column(nullable = false, precision = 10, scale = 3) // 소수점 3자리 설정
-    private BigDecimal average;
+    private BigDecimal avgERA;
 
-    // 기본값 설정 (null이면 0.000)
-    @PrePersist
-    @PreUpdate
-    public void setDefaultValues() {
-        if (this.average == null) {
-            this.average = BigDecimal.ZERO.setScale(3); // 0.000으로 설정
-        }
-    }
+    @Column(nullable = false, precision = 10, scale = 3) // 소수점 3자리 설정
+    private BigDecimal opsWHIP;
 }

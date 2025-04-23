@@ -45,12 +45,14 @@
                             <li class="display-flex-set">
                                 <div class="entry-index">타순</div>
                                 <div class="entry-player">선수명</div>
-                                <div class="entry-player">타율</div>
+                                <div class="entry-player">AVG/ERA</div>
+                                <div class="entry-player">OPS/WHIP</div>
                             </li>
                             <li class="display-flex-set" th:each="entry, state : ${entry}">
                                 <div class="entry-index" th:text="${state.count}"></div>
                                 <div class="entry-player" th:text="${entry.name}"></div>
-                                <div class="entry-player" th:text="${entry.average}"></div>
+                                <div class="entry-player" th:text="${entry.avgERA}"></div>
+                                <div class="entry-player" th:text="${entry.opsWHIP}"></div>
                             </li>
                         </ul>
                         <div class="place-content display-flex-set" id="place-map">
@@ -110,7 +112,7 @@
             </div>
             
             <div id="main-news" class="display-flex-set">
-                <div id="main-news-title">NEWS 📰</div>
+                <div id="main-news-title">NEWS</div>
                 <div id="main-news-content" class="display-flex-set">
                     <a class="news-item" th:each="news : ${news.items}" target="_blank" th:href="${news.originallink}" th:text="${news.title}"></a>
                 </div>

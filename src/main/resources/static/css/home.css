@@ -91,7 +91,7 @@
     text-align: center;
 }
 #main-today-entry > li .entry-player {
-    width: 120px;
+    width: 110px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -100,20 +100,20 @@
 #main-today-inform {
     flex-wrap: wrap;
     flex-direction: column;
-    width: 700px;
     height: 445px;
+    column-gap: 30px;
     row-gap: 20px;
 }
 
 .place-content {
     width: 300px;
-    height: 239px;
+    height: 258px;
     border-radius: 10px;
-    font-weight: 600;
+    font-weight: 700;
     position: relative;
 
     &:last-of-type {
-        height: 186px;
+        height: 167px;
         flex-direction: column;
         background-color: var(--kia-red);
         padding: 25px;
@@ -121,6 +121,10 @@
     }
 }
 
+#place-weather .fas,
+#place-weather span {
+    color: white;
+}
 #weather-title > img { /* 마커 */
     width: 18px;
     vertical-align: -2px;
@@ -129,9 +133,7 @@
     color: transparent;
     line-height: 0px;
 }
-#temperature {
-    color: pink;
-}
+
 #weather-second {
     text-align: center;
     font-size: 13px;
@@ -160,8 +162,8 @@
     width: 310px;
     height: 310px;
     overflow: hidden;
-    border-radius: 5px;
-    margin-bottom: 20px;
+    border-radius: 10px;
+    margin-bottom: 40px;
 }
 
 #slide-wrap {
@@ -211,7 +213,7 @@
     cursor: pointer;
 }
 #slide-btn-wrap > li.active {
-    background-color: black;
+    background-color: var(--kia-red);
 }
 
 /* news -------------------------------*/
@@ -234,24 +236,24 @@
 }
 
 #main-news-content {
-    background-color: #eaeaea;
+    background-color: #efefef;
     width: 310px;
     height: 211px;
-    border-radius: 5px;
+    border-radius: 10px;
     flex-direction: column;
     row-gap: 6px;
 }
 
 .news-item  {
     width: 100%;
-    color: #636363;
+    color:  rgb(111 111 111);
     display: inline-block;
-    padding: 0 15px;
+    padding: 0 20px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
 
     &:hover {
         text-decoration: underline;
