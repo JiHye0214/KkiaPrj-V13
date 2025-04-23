@@ -114,6 +114,8 @@ public class GameServiceImpl implements GameService {
     // 날씨 가져오기
     public Object getWeather(double lat, double lon) {
 
+        // API 요청 URI 생성
+        // * 선물 포장
         URI uri = UriComponentsBuilder
                 .fromUriString("https://api.openweathermap.org/data/2.5/weather")
                 .queryParam("lat",lat)
@@ -124,15 +126,24 @@ public class GameServiceImpl implements GameService {
                 .build()
                 .toUri();
 
-        RestTemplate restTemplate = new RestTemplate();
 
+        // API 요청 전송
+        // * 선물 보내기
         // 아래는 헤더를 넣기 위함
         RequestEntity<Void> req = RequestEntity
                 .get(uri)
                 .build();
 
+
+        // 우체국
+        RestTemplate restTemplate = new RestTemplate();
+
+        // API 응답 수신
+        // * ResponseEntity : 선물 받아옴 / restTemplate.exchange : 선물 도착
         ResponseEntity<Object> result = restTemplate.exchange(req, Object.class);
 
+        // API 응답 본문 반환
+        // * 선물 언박싱
         return result.getBody();
     }
 

@@ -39,15 +39,20 @@
                         </li>
                     </ul>
 
-                    <ul id="main-today-entry" class="display-flex">
-                        <li class="display-flex-set" th:each="entry, state : ${entry}">
-                            <div class="entry-index" th:text="${state.count}"></div>
-                            <div class="entry-player" th:text="${entry.name}"></div>
-                            <div class="entry-player" th:text="${entry.average}"></div>
-                        </li>
-                    </ul>
 
-                    <div id="main-today-inform" class="display-flex">
+                    <div id="main-today-inform" class="display-flex-set">
+                        <ul id="main-today-entry" class="display-flex">
+                            <li class="display-flex-set">
+                                <div class="entry-index">타순</div>
+                                <div class="entry-player">선수명</div>
+                                <div class="entry-player">타율</div>
+                            </li>
+                            <li class="display-flex-set" th:each="entry, state : ${entry}">
+                                <div class="entry-index" th:text="${state.count}"></div>
+                                <div class="entry-player" th:text="${entry.name}"></div>
+                                <div class="entry-player" th:text="${entry.average}"></div>
+                            </li>
+                        </ul>
                         <div class="place-content display-flex-set" id="place-map">
                             <div class="map-wrap">
                                 <div id="latitude" th:text="${home.latitude}"></div>
@@ -55,31 +60,29 @@
                             </div>
                         </div>
 
-                        <div class="place-content display-flex-set" id="place-weather">
+                        <div class="place-content display-flex" id="place-weather">
                             <div id="weather-title">
                                 <img src="/img/home-location.png"/>
                                 <span id="location" th:text="${home.place}"></span>
                             </div>
-                            <div id="weather-icon" th:text="${weather.weather[0].icon}"></div>
-                            <div >
-                                <span id="temperature" th:text="${weather.main.temp} + '°C'"></span>
-                            </div>
-                            <div id="weather-second" class="display-flex">
-                                <div>
+                            <div id="weather-second" class="display-flex-set">
+                                <div class="display-flex-set">
+                                    <div id="weather-icon" th:text="${weather.weather[0].icon}"></div>
+                                    <div >
+                                        <span id="temperature" th:text="${weather.main.temp} + '°C'"></span>
+                                    </div>
+                                </div>
+                                <div class="display-flex-set">
                                     <img src="/img/home-humidity.png"/>
                                     <span id="humidity" th:text="${weather.main.humidity} + '%'"></span>
                                 </div>
-                                <div>
-                                    <img src="/img/home-wind.png"/>
-                                    <span id="wind" th:text="${weather.wind.speed} + 'm/s'"></span>
-                                </div>
-                                <div>
+                                <div class="display-flex-set">
                                     <img src="/img/home-cloud.png"/>
                                     <span id="cloud" th:text="${weather.clouds.all + '%'}"></span>
                                 </div>
-                                <div>
-                                    <img src="/img/home-pressure.png"/>
-                                    <span id="pressure" th:text="${weather.main.pressure + 'hPa'}"></span>
+                                <div class="display-flex-set">
+                                    <img src="/img/home-wind.png"/>
+                                    <span id="wind" th:text="${weather.wind.speed} + 'm/s'"></span>
                                 </div>
                             </div>
                         </div>

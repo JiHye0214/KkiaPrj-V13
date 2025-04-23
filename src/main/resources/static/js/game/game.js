@@ -170,7 +170,7 @@ const calendarInit = () => {
                 const newContent = `
                     <div id="bar-state" class="display-flex-set">
                         <p class='inform-items ${game.gameState == "soon" ? "soon" : ""}'>${game.gameState == "soon" ? "경기 예정" : "경기 종료"}</p>
-                        <p id="game-result" class='inform-items'>${game.gameState == "win" ? "승" : game.gameState == "lose" ? "패" : game.gameState == "draw" ? "무" : ""}</p>
+                        <p id="game-result" class='inform-items'></p>
                     </div>
                     <div id="bar-date">${game.gameDate + " " + game.gameTime}</div>
                     <div id="bar-location">
@@ -205,13 +205,20 @@ const calendarInit = () => {
                     let $gameResult = $("#game-result");
                     switch (gameState) {
                         case "win":
+                            $gameResult.text("승");
                             $gameResult.css({ "background-color": "var(--kia-red)", "display": "block" });
                             break;
                         case "lose":
+                            $gameResult.text("패");
                             $gameResult.css({ "background-color": "", "display": "block" });
                             break;
                         case "cancel":
-                            $gameResult.css({ "background-color": "lightgray", "display": "block" });
+                            $gameResult.text("취");
+                            $gameResult.css({ "background-color": "#6e6e6e", "display": "block" });
+                            break;
+                        case "draw":
+                            $gameResult.text("무");
+                            $gameResult.css({ "background-color": "lightgreen", "display": "block" });
                             break;
                         default:
                             $gameResult.css("display", "none");

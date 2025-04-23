@@ -20,7 +20,7 @@
     border-radius: 10px;
     flex-direction: column;
     position: absolute;
-    gap: 20px;
+    gap: 35px;
 }
 
 #not-today {
@@ -46,15 +46,7 @@
     z-index: 200;
 }
 
-#main-today-opponent {
-    width: 787px;
-    height: 140px;
-    overflow: hidden;
-}
-
 #main-today-opponent > li {
-    height: 100%;
-    line-height: 140px;
     font-size: 50px;
     font-weight: 800;
     background-size: 65px;
@@ -80,23 +72,26 @@
     width: fit-content;
     height: fit-content;
     flex-direction: column;
+    gap: 5px;
 }
 #main-today-entry > li {
-    height: 40px;
+    height: 36px;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 13px;
+    border-radius: 10px;
+    box-shadow: inset 0px 1px 10px 0px lightgray;
 
     &:last-of-type {
         border: none;
     }
 }
 #main-today-entry > li .entry-index {
-    width: 30px;
+    width: 60px;
     line-height: 40px;
     text-align: center;
 }
 #main-today-entry > li .entry-player {
-    width: 100px;
+    width: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -105,57 +100,49 @@
 #main-today-inform {
     flex-wrap: wrap;
     flex-direction: column;
-    width: 723px;
-    height: 500px;
+    width: 700px;
+    height: 445px;
+    row-gap: 20px;
 }
 
 .place-content {
-    width: 400px;
-    height: 200px;
-    border-radius: 5px;
+    width: 300px;
+    height: 239px;
+    border-radius: 10px;
     font-weight: 600;
     position: relative;
 
     &:last-of-type {
-        width: 240px;
+        height: 186px;
+        flex-direction: column;
+        background-color: var(--kia-red);
+        padding: 25px;
+        gap: 25px;
     }
 }
 
-#weather-title {
-    margin-bottom: 90px;
-    font-size: 17px;
-    background: #f0f0f0;
-    padding: 10px;
-    border-radius: 5px;
-}
 #weather-title > img { /* 마커 */
-    width: 20px;
+    width: 18px;
     vertical-align: -2px;
 }
 #weather-icon {
-    position: absolute;
-    top: 83px;
-    left: 60px;
-    color: white;
+    color: transparent;
+    line-height: 0px;
 }
 #temperature {
-    background: #f0f0f0;
-    padding: 5px 10px;
-    border-radius: 5px;
+    color: pink;
 }
 #weather-second {
-    width: 170px;
-    margin-top: 30px;
-    text-align: left;
+    text-align: center;
     font-size: 13px;
-    flex-wrap: wrap;
-    row-gap: 5px;
-    column-gap: 20px;
+}
+#weather-second > div {
+    width: 65px;
+    flex-direction: column;
+    gap: 10px;
 }
 #weather-second img {
-    width: 20px;
-    vertical-align: -3px;
-    margin-right: 8px;
+    width: 35px;
 }
 
 /* fan picture -------------------------------*/
