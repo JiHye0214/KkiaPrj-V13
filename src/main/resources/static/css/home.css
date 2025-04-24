@@ -24,26 +24,21 @@
 }
 
 #not-today {
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    border-radius: 5px;
-    position: absolute;
-    top: 0px;
     font-size: 30px;
     font-weight: 900;
-    z-index: 100;
 }
 
-#main-today #today-date {
+#main-today #main-today-date-time > div {
     background: var(--kia-red);
     color: white;
     font-weight: 800;
     font-size: 20px;
     padding: 10px 20px;
     border-radius: 30px;
-    top: 16px;
     z-index: 200;
+}
+#main-today-date-time #today-time {
+    margin-left: 20px;
 }
 
 #main-today-opponent > li {

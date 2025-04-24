@@ -20,13 +20,18 @@
 
         <div id="main-wrapper">
             <div id="main-today" class="display-flex-set">
+                <!-- 날짜 -->
+                <div id="main-today-date-time" class="display-flex">
+                    <div th:text="${today}"></div>
+                    <div th:block th:if="${baseball}" id="today-time" th:text="${gameTime}"></div>
+                </div>
+
                 <th:block th:unless="${baseball}">
                     <div id="not-today" class="display-flex-set">오늘은 경기가 없습니다</div>
                 </th:block>
 
-                <div id="today-date" th:text="${today}"></div>
-
                 <th:block th:if="${baseball}">
+                    <!-- 상대 -->
                     <ul id="main-today-opponent" class="display-flex-set">
                         <li id="away">
                             <img th:src="@{'/img/' + ${away.img}}"/>
@@ -39,8 +44,8 @@
                         </li>
                     </ul>
 
-
                     <div id="main-today-inform" class="display-flex-set">
+                        <!-- 엔트리 -->
                         <ul id="main-today-entry" class="display-flex">
                             <li class="display-flex-set">
                                 <div class="entry-index">타순</div>
@@ -55,6 +60,8 @@
                                 <div class="entry-player" th:text="${entry.opsWHIP}"></div>
                             </li>
                         </ul>
+
+                        <!-- 지도 -->
                         <div class="place-content display-flex-set" id="place-map">
                             <div class="map-wrap">
                                 <div id="latitude" th:text="${home.latitude}"></div>
@@ -62,6 +69,7 @@
                             </div>
                         </div>
 
+                        <!-- 날씨 -->
                         <div class="place-content display-flex" id="place-weather">
                             <div id="weather-title">
                                 <img src="/img/home-location.png"/>

@@ -57,13 +57,14 @@ public class GameServiceImpl implements GameService {
         boolean baseball = false;
         Team home = new Team();
         Team away = new Team();
+        String gameTime = "";
         Object weatherObj = new Object();
         List<GamePlayer> entry = new ArrayList<>();
         Long [] entryArr = {36L, 5L, 47L, 45L, 34L, 3L, 42L, 25L, 9L, 40L}; // test
 
         // 오늘 날짜
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.M.dd")); // 이게 되네 ?
-//        String date = "2025.3.30";
+//        String date = "2025.3.11";
         // 공식 일정
         List<GameSchedule> schedules = gameScheduleRepository.findAll();
         // 엔트리
@@ -78,6 +79,7 @@ public class GameServiceImpl implements GameService {
                 baseball = true;
                 Team opponent = teamRepository.findByCode(schedule.getOpponent()); // 오늘 상태팀 객체
                 Team kia = teamRepository.findByCode("KKIA");
+                gameTime = schedule.getGameTime(); // 시작 시간
 
                 if(schedule.isHomeGame()) { // 기아 홈
                     away = opponent;
@@ -104,6 +106,7 @@ public class GameServiceImpl implements GameService {
         model.addAttribute("baseball", baseball);
         model.addAttribute("home", home);
         model.addAttribute("away", away);
+        model.addAttribute("gameTime", gameTime);
         model.addAttribute("weather", weatherObj);
         model.addAttribute("mapKey", mapKey);
         model.addAttribute("entry", entry);
