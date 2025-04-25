@@ -24,6 +24,7 @@
 }
 
 #not-today {
+    height: 553px;
     font-size: 30px;
     font-weight: 900;
 }
@@ -47,6 +48,7 @@
     background-size: 65px;
     background-repeat: no-repeat;
     background-position: right;
+
     &:first-child {
        background-position: left;
     }

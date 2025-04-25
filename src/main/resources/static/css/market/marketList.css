@@ -1,9 +1,9 @@
 #marketList-wrap {
     width: 1200px;
     margin: 0px auto 50px;
-    border: 2px solid;
-    border-radius: 5px;
     padding: 20px;
+    box-shadow: 0 0 20px 0 lightgray;
+    border-radius: 10px;
 }
 button {
     cursor: pointer;
@@ -16,36 +16,39 @@ button {
 }
 #list-header-txt {
     text-align: center;
-    border-bottom: 2px solid;
-    padding: 20px 0 40px;
+    border-bottom: thin solid lightgray;
+    padding: 40px 0;
     font-size: 30px;
-    font-weight: 600;
+    font-weight: 800;
 }
+#list-header-txt > span {
+    font-size: 15px;
+    font-weight: 500;
+}
+
 #list-search-wrap {
     justify-content: space-between;
     margin-bottom: 20px;
 }
+
 [name="search-form"] {
-    column-gap: 20px;
+    column-gap: 15px;
+    overflow: hidden;
+}
+#write-btn, [name="search-form"] {
+    border-radius: 10px;
+    background: var(--kia-red);
 }
 #write-btn, [name="search-form"] * {
-    font-size: 16px;
-    font-weight: 600;
-    height: 39px;
-    line-height: 34px;
-    border-radius: 5px;
-    border: 2px solid;
-    padding: 0 10px;
-    background-color: white;
+    height: 40px;
+    line-height: 40px;
+    font-size: 15px;
+    font-weight: 800;
+    border: none;
+    padding: 0 15px;
+    color: white;
     outline: none;
-}
-#write-btn, #initial-btn, #search-btn {
-    &:hover {
-        background-color: var(--yellow-btn);
-    }
-}
-#search-input::placeholder {
-    color: rgb(207, 207, 207);
+    background: var(--kia-red);
 }
 
 /* ------------------------------------------------------------ */
@@ -57,17 +60,13 @@ button {
     margin-bottom: 20px;
 }
 #list-wrap .list-content {
-    width: 214px;
-    height: 336px;
+    width: 215px;
     flex-direction: column;
-    overflow: hidden;
-    border-radius: 5px;
-    border: 2px solid;
 }
 .product-img {
     width: 100%;
     height: 210px;
-    border-bottom: 2px solid;
+    border-radius: 10px;
     object-fit: cover;
 }
 .product-inform {
@@ -75,17 +74,14 @@ button {
     padding: 20px;
     flex-wrap: wrap;
     row-gap: 5px;
-    FONT-WEIGHT: 500;
-    background-color: var(--basic-pink);
+    font-weight: 500;
+    font-size: 13px;
+    flex-direction: column;
 }
 .product-name {
-    width: 100%;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-}
-.product-region {
-    width: 100%;
 }

@@ -19,13 +19,13 @@
 
         <div id="marketList-wrap">
             <div id="list-header-wrap" class="display-flex">
-                <div id="list-header-txt">마켓</div>
+                <div id="list-header-txt">마켓<br><span>압도하는 우리들의 중고장터</span></div>
                 <div id="list-search-wrap" class="display-flex">
-                    <a id="write-btn" th:href="@{/market/write}">작성하기</a>
+                    <a id="write-btn" th:href="@{/market/write}">+</a>
                     <div id="btn-wrap" class="display-flex-set">
                         <form method="post"  name="search-form" th:action="@{/market/search}" autocomplete="off" class="display-flex">
-                            <button type="button" id="initial-btn">초기화</button>
-                            <input type="text" id="search-input" name="sq" placeholder="검색어를 입력하세요" th:value="${sq}" />
+<!--                            <button type="button" id="initial-btn">초기화</button>-->
+                            <input type="text" id="search-input" name="sq" th:value="${sq}" />
                             <button type="submit" id="search-btn">검색</button>
                         </form>
                     </div>
@@ -35,10 +35,10 @@
             <div id="list-wrap" class="display-flex">
                 <a th:href="@{'/market/detail/' + ${market.id}}" th:each="market : ${lists}" class="list-content display-flex">
                     <img class="product-img" th:src="@{'/upload/' + ${market.marketImgs[0].fileName}}" />
-                    <div class="product-inform display-flex">
+                    <div class="product-inform display-flex-set">
                         <div class="product-name" th:text="${market.product}"></div>
-                        <div class="product-price" th:text="${market.price} + ' 원'"></div>
                         <div class="product-region" th:text="${market.region}"></div>
+                        <div class="product-price" th:text="${market.price} + ' 원'"></div>
                     </div>
                 </a>
             </div>

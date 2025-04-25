@@ -478,7 +478,7 @@ INSERT INTO game_schedule (gameDate, gameTime, homeGame, opponent, gameState) VA
 ("2025.4.20", "14:00", false, "OBHT", "win"),
 ("2025.4.22", "18:30", false, "SSHT", "cancel"),
 ("2025.4.23", "18:30", false, "SSHT", "lose"),
-("2025.4.24", "18:30", false, "SSHT", "soon"),
+("2025.4.24", "18:30", false, "SSHT", "lose"),
 ("2025.4.25", "18:30", TRUE, "HTLG", "soon"),
 ("2025.4.26", "17:00", TRUE, "HTLG", "soon"),
 ("2025.4.27", "14:00", TRUE, "HTLG", "soon"),

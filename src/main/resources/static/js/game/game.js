@@ -69,11 +69,11 @@ const calendarInit = () => {
     const kstGap = 9 * 60 * 60 * 1000; // 한국 kst 기준시간 더하기
     const today = new Date(utc + kstGap); // 한국 시간으로 date 객체 만들기(오늘)
 
-    const thisMonth = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    const realToday = thisMonth; // 오늘 날짜 표시
+    const realToday = new Date(today.getFullYear(), today.getMonth(), today.getDate()); // 오늘 날짜 표기를 위한 것
+    let thisMonth = realToday; // 캘린더를 움직이기 위한 것
 
-    // 클릭한 날짜 CSS
-    const drawDate = {
+    // 클릭한 날짜 CSS 변경을 위한 것
+    let drawDate = {
         yearMonth: `${realToday.getFullYear()}.${realToday.getMonth() + 1}`,
         date: realToday.getDate()
     };
@@ -268,13 +268,13 @@ const calendarInit = () => {
 
     // 이전달로 이동
     $(".go-prev").on("click", function () {
-        thisMonth = new Date(currentYear, currentMonth - 1, 1);
+        thisMonth = new Date(thisMonth.getFullYear(), thisMonth.getMonth() - 1, 1);
         renderCalender(thisMonth);
     });
 
     // 다음달로 이동
     $(".go-next").on("click", function () {
-        thisMonth = new Date(currentYear, currentMonth + 1, 1);
+        thisMonth = new Date(thisMonth.getFullYear(), thisMonth.getMonth() + 1, 1);
         renderCalender(thisMonth);
     });
 }
