@@ -1,7 +1,7 @@
 #marketList-wrap {
     width: 1200px;
     margin: 0px auto 50px;
-    padding: 20px;
+    padding: 30px;
     box-shadow: 0 0 20px 0 lightgray;
     border-radius: 10px;
 }
@@ -11,44 +11,34 @@ button {
 
 /* ------------------------------------------------------------ */
 #list-header-wrap {
-    flex-direction: column;
-    row-gap: 20px;
-}
-#list-header-txt {
-    text-align: center;
-    border-bottom: thin solid lightgray;
-    padding: 40px 0;
-    font-size: 30px;
-    font-weight: 800;
-}
-#list-header-txt > span {
-    font-size: 15px;
-    font-weight: 500;
-}
-
-#list-search-wrap {
-    justify-content: space-between;
-    margin-bottom: 20px;
+    height: 160px;
 }
 
 [name="search-form"] {
+    padding: 20px;
     column-gap: 15px;
-    overflow: hidden;
 }
-#write-btn, [name="search-form"] {
-    border-radius: 10px;
-    background: var(--kia-red);
-}
-#write-btn, [name="search-form"] * {
-    height: 40px;
+#write-btn, [name="search-form"] > * {
+    height: 50px;
     line-height: 40px;
     font-size: 15px;
-    font-weight: 800;
+    font-weight: 600;
     border: none;
-    padding: 0 15px;
-    color: white;
+    border-radius: 50px;
     outline: none;
-    background: var(--kia-red);
+    background: white;
+    box-shadow: 0 0 20px 0 lightgray;
+}
+#search-input {
+    width: 400px;
+    padding: 0 25px;
+}
+#write-btn, #search-btn {
+    padding: 0 18px;
+}
+#write-btn > img,
+#search-btn > img {
+    width: 15px;
 }
 
 /* ------------------------------------------------------------ */
@@ -60,7 +50,7 @@ button {
     margin-bottom: 20px;
 }
 #list-wrap .list-content {
-    width: 215px;
+    width: 211px;
     flex-direction: column;
 }
 .product-img {
@@ -71,14 +61,16 @@ button {
 }
 .product-inform {
     width: 100%;
-    padding: 20px;
+    padding: 20px 0;
     flex-wrap: wrap;
     row-gap: 5px;
     font-weight: 500;
     font-size: 13px;
+    text-align: center;
     flex-direction: column;
 }
 .product-name {
+    width: 100%;
     font-size: 16px;
     font-weight: 600;
     overflow: hidden;

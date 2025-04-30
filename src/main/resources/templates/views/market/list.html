@@ -17,21 +17,16 @@
         <!--/* header */-->
         <th:block th:insert="~{fragment/header::header}"></th:block>
 
-        <div id="marketList-wrap">
-            <div id="list-header-wrap" class="display-flex">
-                <div id="list-header-txt">마켓<br><span>압도하는 우리들의 중고장터</span></div>
-                <div id="list-search-wrap" class="display-flex">
-                    <a id="write-btn" th:href="@{/market/write}">+</a>
-                    <div id="btn-wrap" class="display-flex-set">
-                        <form method="post"  name="search-form" th:action="@{/market/search}" autocomplete="off" class="display-flex">
-<!--                            <button type="button" id="initial-btn">초기화</button>-->
-                            <input type="text" id="search-input" name="sq" th:value="${sq}" />
-                            <button type="submit" id="search-btn">검색</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+        <!-- search bar -->
+        <div id="list-header-wrap" class="display-flex-set">
+            <a id="write-btn" class="display-flex-set" th:href="@{/market/write}"><img src="/img/plus.png"></a>
+            <form method="post"  name="search-form" th:action="@{/market/search}" autocomplete="off" class="display-flex">
+                <input type="text" id="search-input" name="sq" th:value="${sq}" placeholder="상품명을 입력하세요"/>
+                <button type="submit" id="search-btn" class="display-flex-set"><img src="/img/search.png"></button>
+            </form>
+        </div>
 
+        <div id="marketList-wrap">
             <div id="list-wrap" class="display-flex">
                 <a th:href="@{'/market/detail/' + ${market.id}}" th:each="market : ${lists}" class="list-content display-flex">
                     <img class="product-img" th:src="@{'/upload/' + ${market.marketImgs[0].fileName}}" />
