@@ -1,0 +1,257 @@
+#main-wrapper {
+    height: 750px;
+    width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.map-wrap,
+ .player-wrap,
+ .weather-wrap,
+ .news-wrap {
+    display: none;
+}
+
+/* today -------------------------------*/
+#main-today {
+    width: 830px;
+    height: 720px;
+    box-shadow: 0 0 20px 0 lightgray;
+    border-radius: 10px;
+    flex-direction: column;
+    position: absolute;
+    gap: 35px;
+}
+
+#not-today {
+    height: 553px;
+    font-size: 30px;
+    font-weight: 900;
+}
+
+#main-today #main-today-date-time > div {
+    background: var(--kia-red);
+    color: white;
+    font-weight: 800;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 30px;
+    z-index: 200;
+}
+#main-today-date-time #today-time {
+    margin-left: 20px;
+}
+
+#main-today-opponent > li {
+    font-size: 50px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    &:first-child {
+       background-position: left;
+    }
+}
+#main-today-opponent > li > img {
+    width: 70px;
+}
+
+#main-today-opponent > img { /* 방망이 */
+    width: 50px;
+    margin: 0 30px;
+}
+
+/* entry / place / weather ---------------------------*/
+
+#main-today-entry {
+    width: fit-content;
+    height: fit-content;
+    flex-direction: column;
+    gap: 5px;
+}
+#main-today-entry > li {
+    height: 36px;
+    font-weight: 700;
+    font-size: 13px;
+    border-radius: 10px;
+    box-shadow: inset 0px 1px 10px 0px lightgray;
+
+    &:last-of-type {
+        border: none;
+    }
+}
+#main-today-entry > li .entry-index {
+    width: 60px;
+    line-height: 40px;
+    text-align: center;
+}
+#main-today-entry > li .entry-player {
+    width: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#main-today-inform {
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: 445px;
+    column-gap: 30px;
+    row-gap: 20px;
+}
+
+.place-content {
+    width: 300px;
+    height: 258px;
+    border-radius: 10px;
+    font-weight: 700;
+    position: relative;
+
+    &:last-of-type {
+        height: 167px;
+        flex-direction: column;
+        background-color: var(--kia-red);
+        padding: 25px;
+        gap: 25px;
+    }
+}
+
+#place-weather .fas,
+#place-weather span {
+    color: white;
+}
+#weather-title > img { /* 마커 */
+    width: 18px;
+    vertical-align: -2px;
+}
+#weather-icon {
+    color: transparent;
+    line-height: 0px;
+}
+
+#weather-second {
+    text-align: center;
+    font-size: 13px;
+}
+#weather-second > div {
+    width: 65px;
+    flex-direction: column;
+    gap: 10px;
+}
+#weather-second img {
+    width: 35px;
+}
+
+/* fan picture -------------------------------*/
+#main-fan {
+    width: 350px;
+    height: 402px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px 0 lightgray;
+    position: absolute;
+    right: 0px;
+}
+
+/* slide */
+#main-fan-content {
+    width: 310px;
+    height: 310px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 40px;
+}
+
+#slide-wrap {
+    width: 100%;
+    transition: transform 1s ease-in-out;
+}
+
+#slide-wrap > li {
+    min-width: 100%;
+    height: 310px;
+
+    &:nth-child(1) {
+        background-color: lavender;
+    }
+    &:nth-child(2) {
+        background-color: lightgreen;
+    }
+    &:nth-child(3) {
+        background-color: lemonchiffon;
+    }
+    &:nth-child(4) {
+        background-color: lightblue;
+    }
+    &:nth-child(5) {
+        background-color: pink;
+    }
+}
+
+#slide-btn-wrap {
+    column-gap: 10px;
+    position: absolute;
+    left: 117px;
+    top: 362px;
+}
+
+#slide-wrap img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#slide-btn-wrap > li {
+    width: 15px;
+    height: 15px;
+    border: 2px solid ;
+    border-radius: 50%;
+    cursor: pointer;
+}
+#slide-btn-wrap > li.active {
+    background-color: var(--kia-red);
+}
+
+/* news -------------------------------*/
+#main-news {
+    width: 350px;
+    height: 298px;
+    border-radius: 10px;
+    flex-direction: column;
+    box-shadow: 0 0 20px 0 lightgray;
+    position: absolute;
+    top: 422px;
+    right: 0px;
+}
+
+#main-news-title {
+    font-weight: 800;
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#main-news-content {
+    background-color: #efefef;
+    width: 310px;
+    height: 211px;
+    border-radius: 10px;
+    flex-direction: column;
+    row-gap: 6px;
+}
+
+.news-item  {
+    width: 100%;
+    color:  rgb(111 111 111);
+    display: inline-block;
+    padding: 0 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 13px;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

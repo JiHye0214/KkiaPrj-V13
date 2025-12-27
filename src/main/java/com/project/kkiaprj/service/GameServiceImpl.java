@@ -63,8 +63,8 @@ public class GameServiceImpl implements GameService {
         Long [] entryArr = {36L, 5L, 47L, 45L, 34L, 3L, 42L, 25L, 9L, 40L}; // test
 
         // 오늘 날짜
-        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.M.dd")); // 이게 되네 ?
-//        String date = "2025.3.11";
+//        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.M.dd")); // 이게 되네 ?
+        String date = "2025.3.22";
         // 공식 일정
         List<GameSchedule> schedules = gameScheduleRepository.findAll();
         // 엔트리

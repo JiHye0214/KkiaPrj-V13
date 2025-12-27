@@ -24,8 +24,9 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public void home(Model model) {
+    public String home(Model model) {
         gameService.homeRender(model);
         model.addAttribute("top5Favorites", favoriteService.findTop5());
+        return "forward:/index.html";
     }
 }

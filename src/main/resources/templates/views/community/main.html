@@ -28,7 +28,7 @@
                     </div>
                 </div>
 
-                <div id="chat-anonymous" class="display-flex-set" sec:authorize="isAnonymous()">로그인 후 작성할 수 있습니다.</div>
+                <a th:href="@{/user/logIn}" id="chat-anonymous" class="display-flex-set" sec:authorize="isAnonymous()">로그인/가입 하고 작성하기 →</a>
                 <!--/* 아니 이 페이지는 로그인이 필요 없는데 로그인유저 데려오라고 하니까 에러나지 바보멍청아 */-->
                 <form method="post" th:with="logged_user=${#authentication.principal.user}" th:action="@{/community/writeChat}" id="chatting-form" class="display-flex" sec:authorize="isAuthenticated()">
                     <input name="content" type="text" />

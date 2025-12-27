@@ -9,7 +9,7 @@
 .community-home-content {
     width: calc(1160px / 3);
     height: 350px;
-    border: 2px solid ;
+    /* border: 2px solid; */
     border-radius: 5px;
 
     overflow: hidden;
