@@ -12,6 +12,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -32,8 +33,8 @@ public class GameServiceImpl implements GameService {
     private String clientSecret;
     @Value("${app.api.weatherKey}")
     private String weatherKey;
-    @Value("${app.api.mapKey}")
-    private String mapKey;
+//    @Value("${app.api.mapKey}")
+//    private String mapKey;
 
     @Autowired
     GameScheduleRepository gameScheduleRepository;
@@ -52,7 +53,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void homeRender(Model model) {
+    public void homeRender(ModelMap model) {
 
         boolean baseball = false;
         Team home = new Team();
@@ -108,7 +109,7 @@ public class GameServiceImpl implements GameService {
         model.addAttribute("away", away);
         model.addAttribute("gameTime", gameTime);
         model.addAttribute("weather", weatherObj);
-        model.addAttribute("mapKey", mapKey);
+//        model.addAttribute("mapKey", mapKey);
         model.addAttribute("entry", entry);
         model.addAttribute("today", date); // 여기 원래 date 들어가야됨
         model.addAttribute("news", newsList);

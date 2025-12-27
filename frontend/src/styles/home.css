@@ -5,7 +5,6 @@
     position: relative;
 }
 
-.map-wrap,
  .player-wrap,
  .weather-wrap,
  .news-wrap {
@@ -107,6 +106,7 @@
     border-radius: 10px;
     font-weight: 700;
     position: relative;
+    overflow: hidden;
 
     &:last-of-type {
         height: 167px;
