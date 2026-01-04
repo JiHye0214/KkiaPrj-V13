@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -31,8 +32,14 @@ public class GameServiceImpl implements GameService {
     private String clientId;
     @Value("${app.api.clientSecret}")
     private String clientSecret;
+
     @Value("${app.api.weatherKey}")
     private String weatherKey;
+
+    @Value("${app.api.youtubeKey}")
+    private String youtubeKey;
+
+    // 카카오는 공개 가능한 api key 따로 있어서 안 숨겨도 됨
 //    @Value("${app.api.mapKey}")
 //    private String mapKey;
 
@@ -65,13 +72,18 @@ public class GameServiceImpl implements GameService {
 
         // 오늘 날짜
 //        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.M.dd")); // 이게 되네 ?
-        String date = "2025.3.22";
+        String date = "2026.3.28";
         // 공식 일정
         List<GameSchedule> schedules = gameScheduleRepository.findAll();
         // 엔트리
         List<GamePlayer> gamePlayers = gamePlayerRepository.findAll();
         // 뉴스
         Object newsList = getNews();
+        // 유튜브 3개
+        Object youtubeList = getYoutubes();
+
+        System.out.println("---------------------------------------");
+        System.out.println(youtubeList);
 
         // 일정 + 날씨
         for (GameSchedule schedule : schedules) {
@@ -113,6 +125,7 @@ public class GameServiceImpl implements GameService {
         model.addAttribute("entry", entry);
         model.addAttribute("today", date); // 여기 원래 date 들어가야됨
         model.addAttribute("news", newsList);
+        model.addAttribute("youtubes", youtubeList);
     }
 
     // 날씨 가져오기
@@ -124,7 +137,7 @@ public class GameServiceImpl implements GameService {
                 .fromUriString("https://api.openweathermap.org/data/2.5/weather")
                 .queryParam("lat",lat)
                 .queryParam("lon",lon)
-                .queryParam("appid","e2f1ef8ab369be1544125c13be7aa1d6")
+                .queryParam("appid",weatherKey)
                 .queryParam("units","metric")
                 .queryParam("lang","kr")
                 .build()
@@ -180,5 +193,50 @@ public class GameServiceImpl implements GameService {
         ResponseEntity<Object> result = restTemplate.exchange(req, Object.class);
 
         return result.getBody();
+    }
+
+    // 유튜브 가져오기
+    public Object getYoutubes() {
+        URI uri = UriComponentsBuilder
+                .fromUriString("https://www.googleapis.com")
+                .path("/youtube/v3/playlistItems")
+                .queryParam("part","snippet")
+                .queryParam("playlistId","UUKp8knO8a6tSI1oaLjfd9XA")
+                .queryParam("maxResults",3)
+                .queryParam("key", youtubeKey)
+                .build()
+                .toUri();
+
+        RequestEntity<Void> req = RequestEntity
+                .get(uri)
+                .build();
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<Object> result = restTemplate.exchange(req, Object.class);
+
+        // body로 접근해야 map을 돌릴 수 있음
+        Map<String, Object> body = (Map<String, Object>) result.getBody();
+
+        List<Map<String, Object>> finalResult =
+                ((List<Map<String, Object>>) body.get("items")).stream()
+                        .limit(3)
+                        .map(item -> {
+                            Map<String, Object> snippet = (Map<String, Object>) item.get("snippet");
+                            Map<String, Object> resourceId = (Map<String, Object>) snippet.get("resourceId");
+                            Map<String, Object> thumbnails = (Map<String, Object>) snippet.get("thumbnails");
+                            Map<String, Object> high = (Map<String, Object>) thumbnails.get("high");
+
+                            return Map.of(
+                                    "videoId", resourceId.get("videoId"),
+                                    "title", snippet.get("title"),
+                                    "thumbnail", high.get("url")
+                            );
+                        })
+                        .toList();
+
+        // 마치 너가 바디를 리턴했던 것처럼 말이야
+//        return result.getBody();
+        return finalResult;
     }
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../styles/common.css";
 import "../styles/home.css";
 import { getHome } from "../api/home";
@@ -22,39 +22,56 @@ interface HomeProps {
         favoriteImgs: { fileName: string }[];
     }[];
     news?: { items: { originallink: string; title: string }[] };
+    youtubes?: {
+        videoId: string;
+        thumbnail: string;
+    }[];
 }
 
 // 아이콘 ---------------------------------------------------------------
 const weatherIconMap: Record<string, string> = {
-  '01' : 'fas fa-sun fa-3x',
-  '02' : 'fas fa-cloud-sun fa-3x',
-  '03' : 'fas fa-cloud fa-3x',
-  '04' : 'fas fa-cloud-meatball fa-3x',
-  '09' : 'fas fa-cloud-sun-rain fa-3x',
-  '10' : 'fas fa-cloud-showers-heavy fa-3x',
-  '11' : 'fas fa-poo-storm fa-3x',
-  '13' : 'far fa-snowflake fa-3x',
-  '50' : 'fas fa-smog fa-3x'
+    "01": "fas fa-sun fa-3x",
+    "02": "fas fa-cloud-sun fa-3x",
+    "03": "fas fa-cloud fa-3x",
+    "04": "fas fa-cloud-meatball fa-3x",
+    "09": "fas fa-cloud-sun-rain fa-3x",
+    "10": "fas fa-cloud-showers-heavy fa-3x",
+    "11": "fas fa-poo-storm fa-3x",
+    "13": "far fa-snowflake fa-3x",
+    "50": "fas fa-smog fa-3x",
 };
 
 interface WeatherIconProps {
-  code: string; // '01', '02', ...
+    code: string; // '01', '02', ...
 }
 
 const WeatherIcon: React.FC<WeatherIconProps> = ({ code }) => {
-  const iconClass = weatherIconMap[code.substr(0,2)] || "";
+    const iconClass = weatherIconMap[code.substr(0, 2)] || "";
 
-  return iconClass ? <i className={iconClass}></i> : null;
+    return iconClass ? <i className={iconClass}></i> : null;
 };
 
 export default function Home() {
     const [homeData, setHomeData] = useState<HomeProps>();
+    const [x, setX] = useState(0);
+    const [autoIdx, setAutoIdx] = useState(0);
+    const slideBtnWrap = useRef<HTMLUListElement>(null);
+
+    const handleYoutubeSlide = (idx: number) => {
+        const index = idx >= 3 ? 0 : idx;
+        setX(index * -310);
+        setAutoIdx(index);
+
+        const children = document.querySelectorAll<HTMLLIElement>("#slide-btn-wrap > li");
+        children.forEach((child) => child.classList.remove("active"));
+        children[index].classList.add("active");
+    };
 
     useEffect(() => {
         getHome()
             .then((res) => {
                 if (res.data?.news?.items) {
-                    const cleanedNews = res.data.news.items.map((item: {title:string}) => ({
+                    const cleanedNews = res.data.news.items.map((item: { title: string }) => ({
                         ...item,
                         title: item.title
                             .replace(/&quot;/g, '"')
@@ -68,12 +85,26 @@ export default function Home() {
                 }
             })
             .catch((err) => console.error(err));
+
+        const timer = setInterval(() => {
+            setAutoIdx((prevIdx) => {
+                const nextIdx = prevIdx >= 3 ? 0 : prevIdx + 1;
+                handleYoutubeSlide(nextIdx);
+                return nextIdx;
+            });
+        }, 4000);
+
+        return () => clearInterval(timer); // cleanup
     }, []);
 
     if (!homeData) {
-        return <div>로딩 실패.</div>;
+        return (
+            <div id="loading" className="display-flex-set">
+                <img src="/img/loading.png" alt="" id="loading-img" />
+            </div>
+        );
     }
-    const { today, baseball, gameTime, away, home, entry, weather, top5Favorites, news } = homeData;
+    const { today, baseball, gameTime, away, home, entry, weather, news, youtubes } = homeData;
 
     // return은 한 번만 실행되기 때문에 위에서 실행되면 밑은 당연히 실행되지 않음. 즉 else 필요 없음
     return (
@@ -150,7 +181,7 @@ export default function Home() {
                                 </div>
                             )}
 
-                            {/* 엔트리 */}
+                            {/* Entry */}
                             <ul id="main-today-entry" className="display-flex">
                                 <li className="display-flex-set">
                                     <div className="entry-index">타순</div>
@@ -172,28 +203,34 @@ export default function Home() {
                 )}
             </div>
 
-            <div id="main-fan" className="display-flex-set">
-                <div id="main-fan-content">
-                    <ul id="slide-wrap" className="display-flex">
-                        {top5Favorites?.map((favorite) => (
-                            <li key={favorite.id}>
-                                <a href={`/community/favorite/detail/${favorite.id}`}>
-                                    <img src={`/upload/${favorite.favoriteImgs[0].fileName}`} />
+            {/* Youtube Banner */}
+            <div id="main-youtube" className="display-flex-set">
+                <div id="main-news-title">갸티비 최신 영상 바로가기</div>
+                <div id="main-youtube-content">
+                    <div
+                        id="slide-wrap"
+                        className="display-flex"
+                        style={{
+                            transform: `translateX(${x}px)`,
+                        }}
+                    >
+                        {youtubes?.map((n, index) => (
+                            <li key={index}>
+                                <a href={`https://www.youtube.com/watch?v=${n.videoId}`} target="_blank" rel="noreferrer">
+                                    <img src={`${n.thumbnail}`} alt="" />
                                 </a>
                             </li>
                         ))}
-                    </ul>
+                    </div>
                 </div>
-                <ul id="slide-btn-wrap" className="display-flex">
-                    <li className="active"></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
+                <ul ref={slideBtnWrap} id="slide-btn-wrap" className="display-flex">
+                    <li className="active" onClick={() => handleYoutubeSlide(0)}></li>
+                    <li onClick={() => handleYoutubeSlide(1)}></li>
+                    <li onClick={() => handleYoutubeSlide(2)}></li>
                 </ul>
             </div>
 
-            {/* 뉴스 */}
+            {/* News List */}
             <div id="main-news" className="display-flex-set">
                 <div id="main-news-title">NEWS</div>
                 <div id="main-news-content" className="display-flex-set">

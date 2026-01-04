@@ -4,6 +4,7 @@ import com.project.kkiaprj.domain.Favorite;
 import com.project.kkiaprj.domain.GamePlayer;
 import com.project.kkiaprj.domain.Team;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
@@ -18,8 +19,6 @@ public class HomeServiceImpl implements HomeService {
     @Autowired
     private GameService gameService;
 
-    @Autowired
-    private FavoriteService favoriteService;
 
     @Override
     public Map<String, Object> getHomeData() {
@@ -31,8 +30,6 @@ public class HomeServiceImpl implements HomeService {
         // 변환이 안 되는 거지같은 애들이 있기 때문에
         // 각각 어쩌고를 거쳐야 map에 집어 넣을 수 있음
 
-        // top5Favorites 변환
-        List<Map<String,Object>> top5Favorites = convertFavorites(model.get("top5Favorites"));
         // entry 변환
         List<Map<String,Object>> entry = convertPlayers(model.get("entry"));
         // home/away 변환
@@ -47,9 +44,9 @@ public class HomeServiceImpl implements HomeService {
         safeMap.put("home", home);
         safeMap.put("away", away);
         safeMap.put("entry", entry);
-        safeMap.put("top5Favorites", top5Favorites);
         safeMap.put("weather", model.get("weather")); // 외부 API 호출 데이터 포함
         safeMap.put("news", model.get("news"));       // 외부 API 호출 데이터 포함
+        safeMap.put("youtubes", model.get("youtubes"));       // 외부 API 호출 데이터 포함
 
         return safeMap;
     }
