@@ -54,7 +54,7 @@ const WeatherIcon: React.FC<WeatherIconProps> = ({ code }) => {
 export default function Home() {
     const [homeData, setHomeData] = useState<HomeProps>();
     const [x, setX] = useState(0);
-    const [autoIdx, setAutoIdx] = useState(0);
+    const [, setAutoIdx] = useState(0); // 아니 이게 되네?
     const slideBtnWrap = useRef<HTMLUListElement>(null);
 
     const handleYoutubeSlide = (idx: number) => {
@@ -204,8 +204,19 @@ export default function Home() {
             </div>
 
             {/* Youtube Banner */}
-            <div id="main-youtube" className="display-flex-set">
-                <div id="main-news-title">갸티비 최신 영상 바로가기</div>
+            <div id="main-youtube" className="display-flex-set main-side-common black-theme">
+                <div id="youtube-title-wrap" className="display-flex">
+                    <div id="youtube-logo-wrap" className="display-flex">
+                        <img src="/img/youtube.png" alt="" />
+                        <span className="main-side-title black-theme">KKIAtube</span>
+                    </div>
+                    <p className="black-theme">최신 영상 바로 보기</p>
+                    <ul ref={slideBtnWrap} id="slide-btn-wrap" className="display-flex">
+                        <li className="active" onClick={() => handleYoutubeSlide(0)}></li>
+                        <li onClick={() => handleYoutubeSlide(1)}></li>
+                        <li onClick={() => handleYoutubeSlide(2)}></li>
+                    </ul>
+                </div>
                 <div id="main-youtube-content">
                     <div
                         id="slide-wrap"
@@ -223,16 +234,16 @@ export default function Home() {
                         ))}
                     </div>
                 </div>
-                <ul ref={slideBtnWrap} id="slide-btn-wrap" className="display-flex">
-                    <li className="active" onClick={() => handleYoutubeSlide(0)}></li>
-                    <li onClick={() => handleYoutubeSlide(1)}></li>
-                    <li onClick={() => handleYoutubeSlide(2)}></li>
-                </ul>
+            </div>
+
+            {/* Advertisement hahahaha */}
+            <div id="main-ads" className="display-flex-set main-side-common">
+                <img src="/img/ads/ad1.png" alt="" />
             </div>
 
             {/* News List */}
-            <div id="main-news" className="display-flex-set">
-                <div id="main-news-title">NEWS</div>
+            <div id="main-news" className="display-flex-set main-side-common black-theme">
+                <div className="main-side-title black-theme">NEWS</div>
                 <div id="main-news-content" className="display-flex-set">
                     {news?.items.map((n, index) => (
                         <a key={index} className="news-item" href={n.originallink} target="_blank" rel="noreferrer">

@@ -1,4 +1,13 @@
-/* 로딩중 */
+/* 혹시 모를 테마 클래스(흑백모드) */
+.black-theme {
+    color: white;
+}
+#main-news.black-theme,
+#main-youtube.black-theme {
+    background-color: black;
+}
+
+/* 로딩중 ------------------------------*/
 #loading {
     flex-direction: column;
     gap: 30px;
@@ -15,15 +24,9 @@
     position: relative;
 }
 
-.player-wrap,
-.weather-wrap,
-.news-wrap {
-    display: none;
-}
-
 /* today -------------------------------*/
 #main-today {
-    width: 830px;
+    width: 838px;
     height: 720px;
     box-shadow: 0 0 20px 0 lightgray;
     border-radius: 10px;
@@ -160,16 +163,44 @@
     width: 35px;
 }
 
-/* fan picture -------------------------------*/
-#main-youtube {
+/* side boxes ============================ */
+/* common */
+.main-side-common {
     width: 350px;
-    height: 402px;
     border-radius: 10px;
     box-shadow: 0 0 20px 0 lightgray;
     position: absolute;
     right: 0px;
     flex-direction: column;
-    gap: 25px;
+}
+
+.main-side-title {
+    font-weight: 800;
+    font-size: 20px;
+}
+
+/* youtube -------------------------------*/
+#main-youtube {
+    height: 300px;
+    gap: 23px;
+}
+#youtube-title-wrap {
+    width: 310px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+#youtube-title-wrap > p {
+    font-size: 13px;
+}
+#youtube-logo-wrap {
+    width: 100%;
+    text-align: center;
+    justify-content: start;
+    gap: 10px;
+}
+#youtube-logo-wrap img {
+    width: 30px;
 }
 
 /* slide */
@@ -211,23 +242,30 @@
     background-color: var(--kia-red);
 }
 
-/* news -------------------------------*/
-#main-news {
-    width: 350px;
-    height: 298px;
-    border-radius: 10px;
-    flex-direction: column;
-    box-shadow: 0 0 20px 0 lightgray;
-    position: absolute;
-    top: 422px;
-    right: 0px;
+/* ads -------------------------------*/
+#main-ads {
+    height: 100px;
+    overflow: hidden;
+    top: 311px;
+    gap: 10px;
+}
+#main-ads img {
+    width: 100%;
+    object-fit: cover;
+    display: block;
 }
 
-#main-news-title {
-    font-weight: 800;
-    font-size: 25px;
+/* news -------------------------------*/
+#main-news {
+    height: 298px;
+    top: 422px;
+    gap: 10px;
+}
+
+#main-news .main-side-title {
+    width: 100%;
+    padding: 0 20px;
     text-align: center;
-    margin-bottom: 10px;
 }
 
 #main-news-content {
