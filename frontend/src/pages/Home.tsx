@@ -127,13 +127,13 @@ export default function Home() {
                         {/* 상대 */}
                         <ul id="main-today-opponent" className="display-flex-set">
                             <li id="away">
-                                <img src={`/img/${away.img}`} />
+                                <img src={`/img/emblems/${away.img}`} />
                                 <span>{away.name}</span>
                             </li>
                             <img src="/img/baseball.png" />
                             <li id="home">
                                 <span>{home.name}</span>
-                                <img src={`/img/${home.img}`} />
+                                <img src={`/img/emblems/${home.img}`} />
                             </li>
                         </ul>
 
@@ -236,7 +236,7 @@ export default function Home() {
                 </div>
             </div>
 
-            {/* Advertisement hahahaha */}
+            {/* Advertisement */}
             <div id="main-ads" className="display-flex-set main-side-common">
                 <img src="/img/ads/ad1.png" alt="" />
             </div>
