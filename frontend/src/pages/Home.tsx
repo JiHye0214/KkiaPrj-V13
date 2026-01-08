@@ -243,7 +243,7 @@ export default function Home() {
 
             {/* News List */}
             <div id="main-news" className="display-flex-set main-side-common black-theme">
-                <div className="main-side-title black-theme">NEWS</div>
+                <div className="main-side-title black-theme">TIGERS's NEWS</div>
                 <div id="main-news-content" className="display-flex-set">
                     {news?.items.map((n, index) => (
                         <a key={index} className="news-item" href={n.originallink} target="_blank" rel="noreferrer">

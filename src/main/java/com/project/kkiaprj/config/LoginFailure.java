@@ -33,7 +33,7 @@ public class LoginFailure implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         System.out.println("### Login Failed : onAuthenticationFailure() is called ###");
 
-        String errorMessage = null;
+        String errorMessage;
 
         if(exception instanceof BadCredentialsException || exception instanceof InternalAuthenticationServiceException){
             errorMessage = "아이디 또는 비밀번호가 맞지 않습니다";
@@ -50,11 +50,24 @@ public class LoginFailure implements AuthenticationFailureHandler {
             errorMessage = "알수 없는 이유로 로그인에 실패하였습니다. 관리자에게 문의하세요";
         }
 
-        // request.setAttibute에 적어주고 html에 바로 넣을 수 있음
-        request.setAttribute("errorMessage", errorMessage);
-        request.setAttribute("loginId", request.getParameter("loginId"));
+        // 260108: API용 방식 적용해야 함!
+        response.setContentType("application/json; charset=UTF-8");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
+        // 260108: 메세지 이렇게 전달
+        response.getWriter().write("""
+        {
+          "message": "%s"
+        }
+        """.formatted(errorMessage));
+
+        // 260108: 아래는 서버 랜더링용 방식 -> 리액트 끼면 필요 없음
+        // request.setAttibute에 적어주고 html에 바로 넣을 수 있음
+//        request.setAttribute("errorMessage", errorMessage);
+//        request.setAttribute("loginId", request.getParameter("loginId"));
+
+        // 260108: 아래는 서버 내부에서 뷰로 이동시키는 동작 -> 리액트 끼면 필요 없음
         // redirect 나 forward 시켜준다
-        request.getRequestDispatcher(DEFAULT_FAILURE_FORWARD_URL).forward(request, response);
+//        request.getRequestDispatcher(DEFAULT_FAILURE_FORWARD_URL).forward(request, response);
     }
 }

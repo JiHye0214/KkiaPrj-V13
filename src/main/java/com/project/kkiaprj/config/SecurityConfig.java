@@ -8,6 +8,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -26,6 +29,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
+                // cors 오류 방지
+                .cors(cors -> cors.configurationSource(request -> {
+                    CorsConfiguration config = new CorsConfiguration();
+                    config.setAllowedOrigins(List.of("http://localhost:5173")); // 프론트 주소
+                    config.setAllowedMethods(List.of("GET","POST","OPTIONS"));
+                    config.setAllowCredentials(true); // 쿠키 허용
+                    return config;
+                }))
+
                 .csrf(csrf -> csrf.disable()) // CSRF 비활성화
 
                 // authority setting
@@ -51,14 +63,15 @@ public class SecurityConfig {
 
                 .formLogin(form -> form
                         .usernameParameter("loginId")
-                        .loginPage("/user/logIn")
-                        .loginProcessingUrl("/user/logIn")
-                        .successHandler(new LoginSuccess("/home"))
+                        .passwordParameter("password")
+                        .loginPage("/user/login") // 페이지 이름 (프론트)
+                        .loginProcessingUrl("/api/user/login") // 실제 인증 (백엔드)
+//                        .successHandler(new LoginSuccess("/home"))
                         .failureHandler(new LoginFailure())
                 )
 
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer
-                        .logoutUrl("/doLogout")
+                        .logoutUrl("/api/user/logout")
                         .logoutSuccessUrl("/home")
                         .logoutSuccessHandler(new LogoutSuccess())
                         .invalidateHttpSession(false)

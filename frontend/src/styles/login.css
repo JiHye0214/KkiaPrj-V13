@@ -107,11 +107,11 @@ label > img {
 }
 
 #gender {
-    margin-right: 5px;
     line-height: 26px;
 }
 
 .choice-wrap {
+    margin-left: 5px;
     background-color: white;
     padding: 2px 5px;
     border: 1px solid lightgray;

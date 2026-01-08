@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -29,8 +28,8 @@ import java.util.Objects;
 
 import static java.lang.System.err;
 
-@Controller
-@RequestMapping("/user")
+@RestController
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
@@ -42,13 +41,11 @@ public class UserController {
     @Autowired
     private UserMypageService userMypageService;
 
-    @GetMapping("/logIn")
-    public void logIn(){}
 
     // 로그인 에러
     @PostMapping("/loginError")
     public String loginError(){
-        return "user/logIn";
+        return "user/login";
     }
 
     // 찾기

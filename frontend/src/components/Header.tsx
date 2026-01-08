@@ -43,7 +43,7 @@ export default function Header({ isAuthenticated, alert }: HeaderProps) {
         </Link>
 
         {!isAuthenticated && (
-          <Link id="login-btn" to="/user/logIn">
+          <Link id="login-btn" to="/user/login">
             LOGIN
           </Link>
         )}
