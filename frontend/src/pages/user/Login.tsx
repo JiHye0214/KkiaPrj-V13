@@ -1,13 +1,36 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/login.css";
+import LoginError from "../../components/LoginError";
 
 export default function Login() {
+    const navigate = useNavigate();
     const [loginId, setLoginId] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
 
+    const showError = (message: string) => {
+        setErrorMessage(message);
+
+        // 자식은 errormsg 값 여부에 따라 움직이므로 그냥 메세지를 없애버리면 됨. 클래스를 지울 필요 없음 
+        setTimeout(() => {
+            setErrorMessage("");
+        }, 2000);
+    };
+
     const handleLogin = async () => {
+        // 🔴 validation
+        if (!loginId) {
+            showError("아이디를 입력해 주세요");
+            return;
+        }
+
+        if (!password) {
+            showError("비밀번호를 입력해 주세요");
+            return;
+        }
+
+        // 🔵 로그인 요청
         try {
             const params = new URLSearchParams();
             params.append("loginId", loginId);
@@ -22,18 +45,15 @@ export default function Login() {
                 credentials: "include",
             });
 
-            console.log("----------------------")
-            console.log(response);
-
             if (!response.ok) {
                 const err = await response.json();
                 setErrorMessage(err.message);
-                console.log(err.message);
+                showError(err.message);
                 return;
             }
 
             // 로그인 성공
-            // navigate("/home");
+            navigate("/home");
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
             setErrorMessage("서버 오류가 발생했습니다.");
@@ -43,13 +63,14 @@ export default function Login() {
     return (
         <div className="auth-wrapper">
             <div id="login-wrapper" className="display-flex-set">
-                {/* 에러 메시지 */}
-                {errorMessage && (
+                {/* 에러 메시지 -> 리액트는 컴포넌트로 관리하는 게 굿 */}
+                {/* {errorMessage && (
                     <div className="error-msg display-flex-set">
                         <img src="/img/warning.png" width="35px" />
                         <div className="error-msg-text">{errorMessage}</div>
                     </div>
-                )}
+                )} */}
+                <LoginError errorMessage={errorMessage} />
 
                 {/* 로고 */}
                 <Link to="/home">
